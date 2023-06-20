@@ -3,13 +3,19 @@ import { Role } from "./role.entity";
 
 
 @Entity()
-export class Permisson {
+export class Permission {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
     name: string;
+
+    @Column()
+    description: string;
+
+    @Column()
+    is_active: boolean;
     
     @ManyToMany(() => Role, (role) => role.id)
     roles: Role[]

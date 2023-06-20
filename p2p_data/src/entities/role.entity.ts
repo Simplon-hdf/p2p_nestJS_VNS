@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
 import { User } from "./user.entity";
-import { Permisson } from "./permisson.entity";
+import { Permission } from "./permission.entity";
 
 
 @Entity()
@@ -11,11 +11,14 @@ export class Role {
 
     @Column()
     name: string;
+
+    @Column()
+    is_active: boolean;
     
     @OneToMany(() => User, (user) => user.id)
     user: User[]
 
-    @ManyToMany(() => Permisson, (permisson) => permisson.id)
-    permissons: Permisson[]
+    @ManyToMany(() => Permission, (permission) => permission.id)
+    permissions: Permission[]
 
 }
