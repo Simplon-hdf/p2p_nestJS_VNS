@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, Double} from "typeorm";
 //import { Tag } from "./tag.entity";
 
 @Entity()
@@ -7,13 +7,14 @@ export class Training {
     @PrimaryGeneratedColumn()
     id : number;
 
-    @Column()
+    @Column({length : 100}) //Same as defining a varchar(100)
     title : string;
 
-    @Column()
-    is_active : string;
+    @Column({default : true})
+    is_active : boolean;
 
-    /*@OneToOne(()=> Tag )
+    /*@OneToMany(()=> Tag, (tag) => tag.training )
     @JoinColumn()
-    tag: Tag*/
+    tag: Tag[];*/
+
 }
