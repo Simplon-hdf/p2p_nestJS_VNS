@@ -8,25 +8,25 @@ export class User {
     @PrimaryGeneratedColumn()
     id_user: number;
 
-    @Column()
+    @Column({ length : 50 })
     firstName: string;
     
-    @Column()
+    @Column({ length : 50 })
     lastName: string;
 
-    @Column()
+    @Column({ length : 100 })
     email: string;
 
-    @Column()
+    @Column({ length : 255 })
     password: string;
 
-    @Column()
+    @Column({ length : 255 })
     adress: string;
 
     @Column()
     birthday: Date;
 
-    @Column()
+    @Column({ default: true })
     is_active: boolean;
 
     @ManyToOne(() => Role, (role) => role.id_role)

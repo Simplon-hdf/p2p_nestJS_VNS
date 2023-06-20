@@ -9,10 +9,10 @@ export class Role {
     @PrimaryGeneratedColumn()
     id_role: number;
 
-    @Column()
+    @Column({ length : 50 })
     name: string;
 
-    @Column()
+    @Column({ default: true })
     is_active: boolean;
     
     @OneToMany(() => User, (user) => user.id_user)

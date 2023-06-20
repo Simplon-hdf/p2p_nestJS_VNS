@@ -9,10 +9,10 @@ export class UserTraining {
     @PrimaryGeneratedColumn()
     id_userTraining: number;
 
-    @Column()
+    @Column({ default: false })
     is_author: boolean;
 
-    @Column()
+    @Column({ default: true })
     is_active: boolean;
 
     @ManyToOne(() => User, (user) => user.id_user)
