@@ -6,7 +6,7 @@ import { Role } from "./role.entity";
 export class Permission {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id_permission: number;
 
     @Column()
     name: string;
@@ -17,7 +17,7 @@ export class Permission {
     @Column()
     is_active: boolean;
     
-    @ManyToMany(() => Role, (role) => role.id)
+    @ManyToMany(() => Role, (role) => role.id_role)
     roles: Role[]
 
 }

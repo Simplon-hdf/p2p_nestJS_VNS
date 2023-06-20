@@ -6,7 +6,7 @@ import { Role } from "./role.entity";
 export class User {
  
     @PrimaryGeneratedColumn()
-    id: number;
+    id_user: number;
 
     @Column()
     firstName: string;
@@ -29,7 +29,7 @@ export class User {
     @Column()
     is_active: boolean;
 
-    @ManyToOne(() => Role, (role) => role.id)
+    @ManyToOne(() => Role, (role) => role.id_role)
     role: Role
 
 }
