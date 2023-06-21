@@ -11,6 +11,8 @@ import { PersonModule } from './person/person.module';
 @Module({
     controllers: [AppController],
     providers: [AppService],
-    imports: [RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, ConfigModule.forRoot()],
+    imports: [RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, ConfigModule.forRoot({
+        isGlobal: true, 
+    })],
 })
 export class AppModule { }
