@@ -3,18 +3,17 @@ import { User } from "./user.entity";
 import { Lesson } from './lesson.entity';
 
 @Entity()
-export class User_lesson {
+export class UserLesson {
  
     @PrimaryGeneratedColumn()
-    id_user_lesson: number;
+    id: number;
 
     @Column()
-    is_validate: boolean;
+    isValidate: boolean;
 
-    @ManyToOne(() => User, (user) => user.id_user)
+    @ManyToOne(() => User, (user) => user.id)
     user: User
 
-    @ManyToOne(() => Lesson, (lesson) => lesson.id_lesson)
+    @ManyToOne(() => Lesson, (lesson) => lesson.id)
     lesson: Lesson
-
 }
