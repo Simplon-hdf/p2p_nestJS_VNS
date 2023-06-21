@@ -12,9 +12,9 @@ export class User_lesson {
     is_validate: boolean;
 
     @ManyToOne(() => User, (user) => user.id)
-    user: User
+    users: User[]
 
     @ManyToOne(() => Lesson, (lesson) => lesson.id)
-    lesson: Lesson
+    lessons: Lesson[]
 
 }
