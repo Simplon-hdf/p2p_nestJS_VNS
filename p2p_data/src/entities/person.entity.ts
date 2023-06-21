@@ -32,7 +32,7 @@ export class Person {
     @Column({ default: true })
     isActive: boolean;
 
-    @ManyToOne(() => Role, (role) => role.Persons)
+    @ManyToOne(() => Role, (role) => role.persons)
     role: Role
 
     @OneToMany(() => PersonTraining, (personTraining) => personTraining.person)
