@@ -21,7 +21,7 @@ export class Lesson {
     @Column()
     is_active: boolean;
 
-    @ManyToOne(() => Tag, (tag) => tag.id)
+    @ManyToOne(() => Tag, (tag) => tag.id_tag)
     tag: Tag
 
 }
