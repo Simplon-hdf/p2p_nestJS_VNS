@@ -6,7 +6,7 @@ import { Training } from './training.entity';
 export class Tag {
  
     @PrimaryGeneratedColumn()
-    id_tag: number;
+    id: number;
 
     @Column()
     name: string;

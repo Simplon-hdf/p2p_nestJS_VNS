@@ -7,13 +7,13 @@ import { Permission } from "./permission.entity";
 export class Role {
 
     @PrimaryGeneratedColumn()
-    id_role: number;
+    id: number;
 
     @Column({ length : 50 })
     name: string;
 
     @Column({ default: true })
-    is_active: boolean;
+    isActive: boolean;
     
     @OneToMany(() => User, (user) => user.role)
     users: User[]

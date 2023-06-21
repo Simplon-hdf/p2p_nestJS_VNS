@@ -5,7 +5,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 export class Permission {
 
     @PrimaryGeneratedColumn()
-    id_permission: number;
+    id: number;
 
     @Column({ length: 50 })
     name: string;
@@ -14,6 +14,6 @@ export class Permission {
     description: string;
 
     @Column({default: true })
-    is_active: boolean;
+    isActive: boolean;
     
 }
