@@ -4,21 +4,20 @@ import { Training } from "./training.entity";
 
 
 @Entity()
-export class User_training {
+export class UserTraining {
  
     @PrimaryGeneratedColumn()
-    id_user_training: number;
+    id: number;
 
     @Column({ default: false })
-    is_author: boolean;
+    isAuthor: boolean;
 
     @Column({ default: true })
-    is_active: boolean;
+    isActive: boolean;
 
-    @ManyToOne(() => User, (user) => user.user_trainings)
+    @ManyToOne(() => User, (user) => user.userTrainings)
     user: User
 
-    @ManyToOne(() => Training, (training) => training.user_trainings)
+    @ManyToOne(() => Training, (training) => training.userTrainings)
     training: Training
-    
 }

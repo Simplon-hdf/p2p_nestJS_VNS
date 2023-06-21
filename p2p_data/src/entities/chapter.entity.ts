@@ -19,7 +19,7 @@ export class Chapter {
     duration: number;
 
     @Column({default : true})
-    is_active : boolean;
+    isActive : boolean;
 
     @ManyToMany(() => Tag)
     @JoinTable()
