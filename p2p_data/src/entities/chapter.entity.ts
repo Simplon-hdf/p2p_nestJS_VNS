@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import { Tag } from "./tag.entity";
 import { Lesson } from "./lesson.entity";
-import { User } from "./user.entity";
+import { Person } from "./person.entity";
 
 @Entity()
 export class Chapter {
@@ -30,6 +30,6 @@ export class Chapter {
     lessons: Lesson[];
 
     //One chapter has one creator. One creator can create many chapters.
-    @ManyToOne(() => User, (creator) => creator.chapters)
-    creator: User
+    @ManyToOne(() => Person, (creator) => creator.chapters)
+    creator: Person
 }
