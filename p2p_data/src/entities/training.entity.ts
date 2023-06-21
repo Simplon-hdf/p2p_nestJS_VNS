@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, Double, ManyToOne, ManyToMany, JoinTable} from "typeorm";
 import { Tag } from "./tag.entity";
 import { Chapter } from "./chapter.entity";
-import { UserTraining } from "./userTraining.entity";
+import { PersonTraining } from "./personTraining.entity";
 
 @Entity()
 export class Training {
@@ -24,6 +24,6 @@ export class Training {
         })
     chapters: Chapter[];
 
-    @OneToMany(() => UserTraining, (userTraining) => userTraining.training)
-    userTrainings: UserTraining[];
+    @OneToMany(() => PersonTraining, (personTraining) => personTraining.training)
+    personTrainings: PersonTraining[];
 }
