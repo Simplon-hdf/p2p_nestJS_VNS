@@ -20,9 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             database: 'p2p',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             synchronize: true,
-            extra: {
-                ssl: true
-            }
+            // extra: {
+            //     ssl: true
+            // }
         }),
     ],
 })

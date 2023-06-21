@@ -1,5 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne  } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany  } from 'typeorm';
 import { Role } from "./role.entity";
+import { User_training } from "./user_training.entity";
+import { User_lesson } from "./user_lesson.entity";
+import { Chapter } from "./chapter.entity";
 
 
 @Entity()
@@ -29,7 +32,16 @@ export class User {
     @Column({ default: true })
     is_active: boolean;
 
-    @ManyToOne(() => Role, (role) => role.id_role)
+    @ManyToOne(() => Role, (role) => role.users)
     role: Role
+
+    @OneToMany(() => User_training, (user_training) => user_training.user)
+    user_trainings: User_training[]
+
+    @OneToMany(() => Chapter, (chapter) => chapter.user)
+    chapters: Chapter[]
+
+    @OneToMany(() => User_lesson, (user_lesson) => user_lesson.user)
+    user_lessons: User_lesson[]
 
 }

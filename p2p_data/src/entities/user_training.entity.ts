@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne  } from 'typeorm';
 import { User } from "./user.entity";
-// import { Training } from "./training.entity";
+import { Training } from "./training.entity";
 
 
 @Entity()
-export class UserTraining {
+export class User_training {
  
     @PrimaryGeneratedColumn()
-    id_userTraining: number;
+    id_user_training: number;
 
     @Column({ default: false })
     is_author: boolean;
@@ -15,9 +15,10 @@ export class UserTraining {
     @Column({ default: true })
     is_active: boolean;
 
-    @ManyToOne(() => User, (user) => user.id_user)
+    @ManyToOne(() => User, (user) => user.user_trainings)
     user: User
 
-    // @ManyToOne(() => Training, (training) => training.id)
-    // training: Training
+    @ManyToOne(() => Training, (training) => training.user_trainings)
+    training: Training
+    
 }

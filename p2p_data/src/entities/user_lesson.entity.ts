@@ -11,10 +11,10 @@ export class User_lesson {
     @Column()
     is_validate: boolean;
 
-    @ManyToOne(() => User, (user) => user.id)
+    @ManyToOne(() => User, (user) => user.id_user)
     user: User
 
-    @ManyToOne(() => Lesson, (lesson) => lesson.id)
+    @ManyToOne(() => Lesson, (lesson) => lesson.id_lesson)
     lesson: Lesson
 
 }
