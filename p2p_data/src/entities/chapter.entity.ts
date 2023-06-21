@@ -22,11 +22,11 @@ export class Chapter {
     isActive : boolean;
 
     @ManyToMany(() => Tag)
-    @JoinTable()
+    @JoinTable({ name : "chapter_tag"})
     tags: Tag[];
 
     @ManyToMany(() => Lesson)
-    @JoinTable()
+    @JoinTable({ name : "chapter_lesson"})
     lessons: Lesson[];
 
     //One chapter has one creator. One creator can create many chapters.
