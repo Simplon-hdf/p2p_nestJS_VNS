@@ -8,13 +8,13 @@ export class Permission {
     @PrimaryGeneratedColumn()
     id_permission: number;
 
-    @Column({ length: 50, nullable: true })
+    @Column({ length: 50 })
     name: string;
 
-    @Column({ length: 255, nullable: true })
-    description: string;
+    @Column({ length: 255 })
+    description: Text;
 
-    @Column({default: true, nullable: false})
+    @Column({default: true })
     is_active: boolean;
     
     @ManyToMany(() => Role, (role) => role.id_role)
