@@ -14,6 +14,7 @@ ormconfig.json
 
 # OS
 .DS_Store
+.env
 
 # Tests
 /coverage
