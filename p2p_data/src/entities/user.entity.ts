@@ -38,7 +38,7 @@ export class User {
     @OneToMany(() => User_training, (user_training) => user_training.user)
     user_trainings: User_training[]
 
-    @OneToMany(() => Chapter, (chapter) => chapter.user)
+    @OneToMany(() => Chapter, (chapter) => chapter.creator)
     chapters: Chapter[]
 
     @OneToMany(() => User_lesson, (user_lesson) => user_lesson.user)

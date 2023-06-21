@@ -6,6 +6,8 @@ import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
 import { UserTrainingModule } from './user-training/user-training.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TrainingModule } from './training/training.module';
+import { ChapterModule } from './chapter/chapter.module';
 
 @Module({
     controllers: [AppController],
@@ -24,6 +26,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             //     ssl: true
             // }
         }),
+        TrainingModule,
+        ChapterModule,
     ],
 })
 export class AppModule { }
