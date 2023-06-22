@@ -1,5 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { userInfo } from "os";
 import { Chapter } from "src/entities/chapter.entity";
+import { isatty } from "tty";
 import { DataSource } from "typeorm"
 
 // Creation of a custom repository.
@@ -9,8 +11,8 @@ export class ChapterRepository {
 
   chapterRepository = this.dataSource.getRepository(Chapter);
 
-  async getChapterByID(chapterId: number) : Promise<Chapter> {
-    return await this.chapterRepository.findOneBy({
+  getChapterByID(chapterId: number){
+    return this.chapterRepository.findOneBy({
         id: chapterId
     });
       // .createQueryBuilder("chapter")
@@ -28,4 +30,21 @@ export class ChapterRepository {
       return this.chapterRepository.save(chapter);
   }
 
+  async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Chapter> {
+    const chapter = await this.chapterRepository.findOneBy({id: chapterId});
+    if(!chapter){
+      throw new NotFoundException('Chapter to update not found');  
+    }
+
+    chapter.title = title;
+    chapter.description = description;
+    chapter.duration = duration;
+    chapter.isActive = isActive;
+
+    return this.chapterRepository.save(chapter);
+  }
+
+  deleteChapter(chapterId: number){
+    this.chapterRepository.delete(chapterId);
+  }
 }
