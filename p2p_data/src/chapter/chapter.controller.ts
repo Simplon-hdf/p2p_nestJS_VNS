@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ChapterService } from './chapter.service';
 import { Chapter } from 'src/entities/chapter.entity';
 
@@ -22,7 +22,24 @@ export class ChapterController {
         @Body('description') description: string,
         @Body('duration') duration: number
     ) : Promise<Chapter> {
-        const generatedChapter = this.chapterService.createChapter(title, description, duration);
+        const generatedChapter = await this.chapterService.createChapter(title, description, duration);
         return generatedChapter;
+    }
+
+    @Put(':id')
+    async updateChapter(
+        @Param('id') chapterId: number,
+        @Body('title') title: string,
+        @Body('description') description: string,
+        @Body('duration') duration: number,
+        @Body('isActive') isActive: boolean,
+    ) : Promise<Chapter> {
+        const updatedChapter = await this.chapterService.updateChapter(chapterId, title, description, duration, isActive);
+        return updatedChapter;
+    }
+
+    @Delete(':id')
+    deleteChapter(@Param('id') chapterId: number){
+        return this.chapterService.deleteChapter(chapterId);
     }
 }
