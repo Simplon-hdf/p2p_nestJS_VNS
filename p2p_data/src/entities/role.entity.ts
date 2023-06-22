@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
-import { User } from "./user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import { Person } from "./person.entity";
 import { Permission } from "./permission.entity";
 
 
@@ -7,18 +7,21 @@ import { Permission } from "./permission.entity";
 export class Role {
 
     @PrimaryGeneratedColumn()
-    id_role: number;
+    id: number;
 
     @Column({ length : 50 })
     name: string;
 
     @Column({ default: true })
-    is_active: boolean;
+    isActive: boolean;
     
-    @OneToMany(() => User, (user) => user.id_user)
-    user: User[]
+    @OneToMany(() => Person, (person) => person.role)
+    persons: Person[]
 
-    @ManyToMany(() => Permission, (permission) => permission.id_permission)
+    @ManyToMany(() => Permission)
+    @JoinTable({
+        name: "permission_role",
+    })
     permissions: Permission[]
 
 }
