@@ -1,14 +1,23 @@
 // import { EntityRepository, Repository } from 'typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
 import { Person } from '../entities/person.entity';
 import { DataSource } from 'typeorm';
 
-// @EntityRepository(Person)
-export class PersonRepository extends Repository<Person> {
-    // constructor (private dataSource: DataSource){}
 
-    async findAllPerson(): Promise<Person[]> {
-        return this.find();
+@Injectable()
+export class PersonRepository {
+
+    constructor(private dataSource: DataSource) { }
+    personRepository = this.dataSource.getRepository(Person);
+
+    async GetAllPersons() : Promise<Person[]> {
+        return await this.personRepository.find();
+    }
+
+    async GetPersonById(personId : number) : Promise<Person> {
+        return await this.personRepository.findOneBy({
+            id: personId
+        });
     }
 
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { Person } from '../entities/person.entity';
 
@@ -8,8 +8,13 @@ export class PersonController {
     constructor(private readonly personService: PersonService) { }
 
     @Get()
-    async findAllPerson(): Promise<Person[]> {
-        return this.personService.findAll();
+    GetAllPersons() {
+        return this.personService.GetAllPersons();
+    }
+
+    @Get()
+    GetPersonById(@Param('id') personId : number) {
+        return this.personService.GetPersonById(personId);
     }
 
     // @Post()
