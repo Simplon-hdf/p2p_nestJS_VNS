@@ -27,26 +27,28 @@ export class PersonService {
         return { ...person };
     }
 
+    async GetPersonByEmail(email : string): Promise<Person> {
+        const person = await this.personRepository.GetPersonByEmail(email);
+        if (!person){
+            throw new Error("Erreur, personne non trouvée !");
+        }
+        return { ...person };
+    }
 
-    // async findByEmail(email: string): Promise<Person | undefined> {
-    //     const personFind = this.personRepository.findByEmail(email);
-    //     if (!personFind){
-    //         throw new Error("");
-    //     }
-    //     return { ... personFind }
-    // }
+    async createPerson(
+        lastName: string, firstName: string, email: string, password: string, 
+        adress: string, birthday: Date, isActive: boolean, role: number
+        ): Promise<Person> {
+        const person = await this.personRepository.createPerson(firstName, lastName, email, password, adress, birthday, isActive, role);
+        if (!person){
+            throw new Error("Erreur, utilisateur non enregistré !");
+        }
+        return { ...person };
+    }
 
 
 
 
 
-
-
-
-
-
-    // findAll(): Person[] {
-    //     return this.persons;
-    // }
 
 }

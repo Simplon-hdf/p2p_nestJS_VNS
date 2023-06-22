@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
 import { PersonService } from './person.service';
 import { Person } from '../entities/person.entity';
 
@@ -12,32 +12,31 @@ export class PersonController {
         return this.personService.GetAllPersons();
     }
 
-    @Get()
+    @Get('id/:id')
     GetPersonById(@Param('id') personId : number) {
         return this.personService.GetPersonById(personId);
     }
 
-    // @Post()
-    // async create(@Body() createPersonDto: CreatePersonDto): Promise<Person> {
-    //     return this.personService.create(createPersonDto);
-    // }
+    @Get('email')
+    GetPersonByEmail(@Req() req) {
+        const email = req.body.email;
+        return this.personService.GetPersonByEmail(email);
+    }
+
+    @Post()
+    async createPerson(@Req() req) {
+        const lastName = req.body.lastName;
+        const firstName = req.body.firstName;
+        const email = req.body.email;
+        const password = req.body.password;
+        const adresse = req.body.adresse;
+        const birthday = req.body.birthday;
+        const isActive = req.body.isActive;
+        const role = req.body.role;
+        return this.personService.createPerson(lastName,firstName,email,password,adresse,birthday,isActive,role);
+    }
 
 
-
-
-
-
-
-
-    // @Get()
-    // async findOne(): Promise<Person> {
-    //     return this.personService.findOne();
-    // }
-
-    // @Get()
-    // findByEmail() {
-    //     return this.personService.findByEmail(email: string);
-    // }
 
 
 

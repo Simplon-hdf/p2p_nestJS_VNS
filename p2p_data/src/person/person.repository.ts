@@ -10,21 +10,31 @@ export class PersonRepository {
     constructor(private dataSource: DataSource) { }
     personRepository = this.dataSource.getRepository(Person);
 
-    async GetAllPersons() : Promise<Person[]> {
+    async GetAllPersons(): Promise<Person[]> {
         return await this.personRepository.find();
     }
 
-    async GetPersonById(personId : number) : Promise<Person> {
+    async GetPersonById(personId: number): Promise<Person> {
         return await this.personRepository.findOneBy({
             id: personId
         });
     }
 
+    async GetPersonByEmail(email: string): Promise<Person> {
+        return await this.personRepository.findOneBy({
+            email: email
+        });
+    }
 
-
-    // async findByEmail(email: string): Promise<Person | undefined> {
-    //     return this.findOneBy({ email });
-    // }
+    async createPerson(
+        lastName: string, firstName: string, email: string,
+        password: string, adress: string, birthday: Date, isActive: boolean
+    ): Promise<Person> {
+        const person = await this.personRepository.create(
+            { firstName, lastName, email, password, adress, birthday, isActive }
+        );
+        return this.personRepository.save(person);
+    }
 
 
     // async createPerson(name: string, email: string, password: string): Promise<Person> {
