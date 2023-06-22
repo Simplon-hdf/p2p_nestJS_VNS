@@ -32,10 +32,6 @@ export class ChapterRepository {
 
   async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Chapter> {
     const chapter = await this.chapterRepository.findOneBy({id: chapterId});
-    if(!chapter){
-      throw new NotFoundException('Chapter to update not found');  
-    }
-
     chapter.title = title;
     chapter.description = description;
     chapter.duration = duration;
