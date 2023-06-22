@@ -26,27 +26,4 @@ export class PersonService {
         }
         return { ...person };
     }
-
-
-    // async findByEmail(email: string): Promise<Person | undefined> {
-    //     const personFind = this.personRepository.findByEmail(email);
-    //     if (!personFind){
-    //         throw new Error("");
-    //     }
-    //     return { ... personFind }
-    // }
-
-
-
-
-
-
-
-
-
-
-    // findAll(): Person[] {
-    //     return this.persons;
-    // }
-
 }
