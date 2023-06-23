@@ -21,12 +21,14 @@ export class TrainingController {
         return this.trainingService.createTraining(title);
     }
 
-    // @Put(':id')
-    // async updateTraining(
-    //     @Param('id') trainingID: number
-    // ) : Promise<Training> {
-
-    // }
+    @Put(':id')
+    async updateTraining(
+        @Param('id') trainingID: number,
+        @Body('title') title: string,
+        @Body('isActive') isActive: boolean
+    ) : Promise<Training> {
+        return this.trainingService.updateTraining(trainingID, title, isActive);
+    }
 
     // @Delete(':id')
     // deleteTraining(@Param('id') trainingID: number){

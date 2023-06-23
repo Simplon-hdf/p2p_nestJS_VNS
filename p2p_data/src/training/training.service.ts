@@ -15,11 +15,12 @@ export class TrainingService {
     }
 
     async getTrainingById(trainingId: number): Promise<Training> {
-        const training = await this.trainingRepository.getTrainingByID(trainingId);
-        if(!training){
+        try{
+            const training = await this.trainingRepository.getTrainingByID(trainingId);
+            return { ... training };
+        } catch {
             throw new NotFoundException('Training not found');
         }
-        return { ... training };
     }
     
     async createTraining(title: string): Promise<Training> {
@@ -27,11 +28,17 @@ export class TrainingService {
         return { ... training }; // Unpack elements and create a new object to avoid sending references.
     }
     
-    //   async updateChapter(trainingId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Training> {
-
-    //   }
+    async updateTraining(trainingId: number, title: string, isActive: boolean): Promise<Training> {
+        try {
+            const previousTraining = await this.getTrainingById(trainingId);
+            const training = await this.trainingRepository.updateTraining(previousTraining, trainingId, title, isActive);
+            return { ... training };
+        } catch{
+            throw new NotFoundException('Training not found');
+        }
+    }
     
-    //   async deleteChapter(trainingId: number): Promise<string> {
+    //   async deleteTraining(trainingId: number): Promise<string> {
 
     //   }
 }

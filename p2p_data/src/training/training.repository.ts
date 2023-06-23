@@ -25,9 +25,11 @@ export class TrainingRepository{
         return this.trainingRepository.save(training);
     }
     
-    //   async updateTraining(trainingId: number): Promise<Training> {
-
-    //   }
+    updateTraining(trainingToUpdate: Training, trainingId: number, title: string, isActive: boolean): Promise<Training> {
+        trainingToUpdate.title = title;
+        trainingToUpdate.isActive = isActive;
+        return this.trainingRepository.save(trainingToUpdate);
+    }
     
     deleteTraining(trainingId: number){
     
