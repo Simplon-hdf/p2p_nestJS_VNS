@@ -49,7 +49,7 @@ export class PersonService {
         email: string, 
         password: string, 
         adress: string, 
-        birthday: Date, 
+        birthday: string, 
         isActive: boolean
         ): Promise<Person> {
 
