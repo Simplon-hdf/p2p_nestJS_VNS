@@ -1,22 +1,23 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Put, Post, Delete, Param } from '@nestjs/common';
 import { TrainingService } from './training.service';
 import { Training } from 'src/entities/training.entity';
 
 @Controller('training')
 export class TrainingController {
-    
-    // @Get()
-    // getAllChapters(){
-        
-    // }
+    constructor(private readonly trainingService: TrainingService) {}
 
-    // @Get(':id')
-    // getChapterById(@Param('id') chapterId : number) {
-        
-    // }
+    @Get()
+    getAllTrainings(){
+        return this.trainingService.getAllChapters();
+    }
+
+    @Get(':id')
+    getTrainingById(@Param('id') trainingId : number) {
+        return this.trainingService.getChapterById(trainingId);
+    }
 
     // @Post()
-    // async createChapter(
+    // async createTraining(
     //     @Body('title') title: string,
     //     @Body('description') description: string,
     //     @Body('duration') duration: number
@@ -25,14 +26,14 @@ export class TrainingController {
     // }
 
     // @Put(':id')
-    // async updateChapter(
+    // async updateTraining(
     //     @Param('id') trainingID: number
     // ) : Promise<Training> {
 
     // }
 
     // @Delete(':id')
-    // deleteChapter(@Param('id') trainingID: number){
+    // deleteTraining(@Param('id') trainingID: number){
 
     // }
 }

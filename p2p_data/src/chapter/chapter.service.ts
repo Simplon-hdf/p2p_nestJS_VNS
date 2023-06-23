@@ -17,7 +17,7 @@ export class ChapterService {
   async getChapterById(chapterId: number): Promise<Chapter> {
     const chapter = await this.chapterRepository.getChapterByID(chapterId);
     if(!chapter){
-        throw new Error('Chapter not found');
+        throw new NotFoundException('Chapter not found');
     }
     return { ... chapter };
   }

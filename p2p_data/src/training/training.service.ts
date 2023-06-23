@@ -9,13 +9,18 @@ export class TrainingService {
         private readonly trainingRepository: TrainingRepository,
       ) {}
 
-    //   async getAllChapters(): Promise<Training[]> {
+    async getAllChapters(): Promise<Training[]> {
+        const trainings = await this.trainingRepository.getAllTrainings();
+        return [ ... trainings ];
+    }
 
-    //   }
-    
-    //   async getChapterById(trainingId: number): Promise<Training> {
-
-    //   }
+    async getChapterById(trainingId: number): Promise<Training> {
+        const training = await this.trainingRepository.getTrainingByID(trainingId);
+        if(!training){
+            throw new NotFoundException('Training not found');
+        }
+        return { ... training };
+    }
     
     //   async createChapter(title: string, description: string, duration: number): Promise<Training> {
 

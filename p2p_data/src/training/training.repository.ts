@@ -10,22 +10,24 @@ export class TrainingRepository{
     trainingRepository = this.dataSource.getRepository(Training);
 
     getTrainingByID(trainingId: number){
-
-      }
+        return this.trainingRepository.findOneBy({
+            id: trainingId
+        });
+    }
     
-      getAllTrainings(){
-        
-      }
-    
-      createTraining(){
+    getAllTrainings(){
+        return this.trainingRepository.find();
+    }
 
-      }
+    createTraining(){
+
+    }
     
     //   async updateTraining(trainingId: number): Promise<Training> {
 
     //   }
     
-      deleteTraining(trainingId: number){
-        
-      }
+    deleteTraining(trainingId: number){
+    
+    }
 }
