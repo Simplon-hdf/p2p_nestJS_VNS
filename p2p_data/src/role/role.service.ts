@@ -15,7 +15,7 @@ export class RoleService {
     async GetAllRoles(): Promise<Role[]> {
         const roles = await this.roleRepository.GetAllRoles();
         if (!roles) {
-            throw new Error("Erreur, roles non trouvée !");
+            throw new Error("Error, roles not found !");
         }
         return [...roles];
     }
@@ -24,7 +24,7 @@ export class RoleService {
     async GetRoleById(roleId: number): Promise<Role> {
         const role = await this.roleRepository.GetRoleById(roleId);
         if (!role) {
-            throw new Error("Erreur, role non trouvée !");
+            throw new Error("Error, role not found !");
         }
         return { ...role };
     }
@@ -38,7 +38,7 @@ export class RoleService {
 
         const roleInBdd = await this.roleRepository.GetRoleByName(name);
         if (roleInBdd) {
-            throw new Error("Erreur : ce role existe déjà !");
+            throw new Error("Error : This role already exist !");
         } else {
             const newRole = await this.roleRepository.CreateRole(name, isActive);
             return { ...newRole }
@@ -49,7 +49,7 @@ export class RoleService {
     async updateRole(idRole : number, name: string, isActive: boolean ): Promise<Role> {
         const roleInBdd = await this.roleRepository.GetRoleById(idRole);
         if (!roleInBdd) {
-            throw new NotFoundException('role to update not found');
+            throw new NotFoundException('Update Error : role not found !');
         }
         else {
             const roleUpdated = await this.roleRepository.updateRole(idRole, name, isActive);

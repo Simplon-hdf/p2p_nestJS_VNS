@@ -15,7 +15,7 @@ export class PersonService {
     async GetAllPersons(): Promise<Person[]> {
         const persons = await this.personRepository.GetAllPersons();
         if (!persons) {
-            throw new Error("Erreur, personne non trouvée !");
+            throw new Error("Error, person not found !");
         }
         return [...persons];
     }
@@ -24,7 +24,7 @@ export class PersonService {
     async GetPersonById(personId: number): Promise<Person> {
         const person = await this.personRepository.GetPersonById(personId);
         if (!person) {
-            throw new Error("Erreur, personne non trouvée !");
+            throw new Error("Error, person not found !");
         }
         return { ...person };
     }
@@ -33,7 +33,7 @@ export class PersonService {
     async GetPersonByEmail(email: string): Promise<Person> {
         const person = await this.personRepository.GetPersonByEmail(email);
         if (!person) {
-            throw new Error("Erreur, personne non trouvée !");
+            throw new Error("Error, person not found !");
         }
         return { ...person };
     }
@@ -51,7 +51,7 @@ export class PersonService {
 
         const personInBdd = await this.personRepository.GetPersonByEmail(email);
         if (personInBdd) {
-            throw new Error("Erreur : cet utilisateur existe déjà !");
+            throw new Error("Error : This user already exist !");
         } else {
             const newPerson = await this.personRepository.CreatePerson(
                 firstName, lastName, email, password, adress, birthday, isActive

@@ -24,7 +24,7 @@ export class RoleController {
     async createRole(@Param('id') idRole: number, @Req() req) {
         const name = req.body.name;
         const isActive = req.body.isActive;
-        return this.roleService.createRole(idRole, name, isActive);
+        return await this.roleService.createRole(idRole, name, isActive);
     }
 
     // Update one Roles
