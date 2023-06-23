@@ -3,7 +3,7 @@ import { ChapterRepository } from './chapter.repository';
 import { Chapter } from 'src/entities/chapter.entity';
 
 @Injectable()
-export class ChapterService {
+export class ChapterService {git 
   constructor(
       @Inject(ChapterRepository)
       private readonly chapterRepository: ChapterRepository,
@@ -28,19 +28,16 @@ export class ChapterService {
   }
 
   async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Chapter> {
-    if(!await this.chapterRepository.getChapterByID(chapterId)){
-      throw new NotFoundException('Chapter to update not found');
+    if(await this.chapterRepository.getChapterByID(chapterId)){
+      const chapter = await this.chapterRepository.updateChapter(chapterId, title, description, duration, isActive);
+      return { ... chapter };
     }
-    
-    const chapter = await this.chapterRepository.updateChapter(chapterId, title, description, duration, isActive);
-    return { ... chapter };
   }
 
   async deleteChapter(chapterId: number): Promise<string> {
-    if(!await this.chapterRepository.getChapterByID(chapterId)){
-      throw new NotFoundException('Chapter to delete not found');
+    if(await this.chapterRepository.getChapterByID(chapterId)){
+      this.chapterRepository.deleteChapter(chapterId);
+      return "Chapter deleted";
     }
-    this.chapterRepository.deleteChapter(chapterId);
-    return "Chapter deleted";
   } 
 }
