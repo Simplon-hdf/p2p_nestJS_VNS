@@ -8,7 +8,7 @@ export class PersonLesson {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({default: false})
     isValidate: boolean;
 
     @ManyToOne(() => Person, (person) => person.id)

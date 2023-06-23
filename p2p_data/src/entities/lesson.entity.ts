@@ -17,7 +17,7 @@ export class Lesson {
     @Column()
     subject: string;
 
-    @Column()
+    @Column({default: true})
     isActive: boolean;
 
     @ManyToOne(() => Tag, (tag) => tag.id)

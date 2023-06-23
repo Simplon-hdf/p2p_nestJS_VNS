@@ -1,18 +1,42 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PersonController } from './person.controller';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
+import { PersonService } from './person.service';
+import { Person } from '../entities/person.entity';
 
-describe('PersonController', () => {
-  let controller: PersonController;
+@Controller('person')
+export class PersonController {
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [PersonController],
-    }).compile();
+    constructor(private readonly personService: PersonService) { }
 
-    controller = module.get<PersonController>(PersonController);
-  });
+    @Get()
+    GetAllPersons() {
+        return this.personService.GetAllPersons();
+    }
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+    @Get('id/:id')
+    GetPersonById(@Param('id') personId : number) {
+        return this.personService.GetPersonById(personId);
+    }
+
+    @Get('email')
+    GetPersonByEmail(@Req() req) {
+        const email = req.body.email;
+        return this.personService.GetPersonByEmail(email);
+    }
+
+    @Post()
+    async createPerson(@Req() req) {
+        const lastName = req.body.lastName;
+        const firstName = req.body.firstName;
+        const email = req.body.email;
+        const password = req.body.password;
+        const adresse = req.body.adresse;
+        const birthday = req.body.birthday;
+        const isActive = req.body.isActive;
+        return this.personService.createPerson(lastName,firstName,email,password,adresse,birthday,isActive);
+    }
+
+
+
+
+
+}

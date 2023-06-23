@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany  } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Role } from "./role.entity";
 import { PersonTraining } from "./personTraining.entity";
 import { PersonLesson } from "./personLesson.entity";
@@ -28,6 +28,8 @@ export class Person {
 
     @Column()
     birthday: Date;
+    // @Column('date')
+    // birthday: string;
 
     @Column({ default: true })
     isActive: boolean;
