@@ -29,16 +29,15 @@ export class TrainingService {
     }
     
     async updateTraining(trainingId: number, title: string, isActive: boolean): Promise<Training> {
-        try {
-            const previousTraining = await this.getTrainingById(trainingId);
-            const training = await this.trainingRepository.updateTraining(previousTraining, trainingId, title, isActive);
-            return { ... training };
-        } catch{
-            throw new NotFoundException('Training not found');
-        }
+        const previousTraining = await this.getTrainingById(trainingId);
+        const training = await this.trainingRepository.updateTraining(previousTraining, trainingId, title, isActive);
+        return { ... training };
     }
     
-    //   async deleteTraining(trainingId: number): Promise<string> {
-
-    //   }
+    async deleteTraining(trainingId: number): Promise<string> {
+        if(await this.trainingRepository.getTrainingByID(trainingId)){
+            this.trainingRepository.deleteTraining(trainingId);
+            return "Training deleted";
+        }
+    }
 }

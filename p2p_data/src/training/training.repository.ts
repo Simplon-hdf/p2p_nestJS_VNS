@@ -32,6 +32,6 @@ export class TrainingRepository{
     }
     
     deleteTraining(trainingId: number){
-    
+        this.trainingRepository.delete(trainingId);
     }
 }

@@ -30,8 +30,8 @@ export class TrainingController {
         return this.trainingService.updateTraining(trainingID, title, isActive);
     }
 
-    // @Delete(':id')
-    // deleteTraining(@Param('id') trainingID: number){
-
-    // }
+    @Delete(':id')
+    deleteTraining(@Param('id') trainingID: number){
+        return this.trainingService.deleteTraining(trainingID);
+    }
 }
