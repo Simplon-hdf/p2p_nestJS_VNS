@@ -29,15 +29,18 @@ export class ChapterService {
 
   async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Chapter> {
     if(!await this.chapterRepository.getChapterByID(chapterId)){
-      throw new NotFoundException('Chapter to update not found');  
-    }  
+      throw new NotFoundException('Chapter to update not found');
+    }
     
     const chapter = await this.chapterRepository.updateChapter(chapterId, title, description, duration, isActive);
     return { ... chapter };
   }
 
   async deleteChapter(chapterId: number): Promise<string> {
-      this.chapterRepository.deleteChapter(chapterId);
-      return "Chapter deleted";
+    if(!await this.chapterRepository.getChapterByID(chapterId)){
+      throw new NotFoundException('Chapter to delete not found');
+    }
+    this.chapterRepository.deleteChapter(chapterId);
+    return "Chapter deleted";
   } 
 }

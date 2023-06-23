@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Post, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Put, Post, Delete, Param, Body } from '@nestjs/common';
 import { TrainingService } from './training.service';
 import { Training } from 'src/entities/training.entity';
 
@@ -8,22 +8,18 @@ export class TrainingController {
 
     @Get()
     getAllTrainings(){
-        return this.trainingService.getAllChapters();
+        return this.trainingService.getAllTrainings();
     }
 
     @Get(':id')
     getTrainingById(@Param('id') trainingId : number) {
-        return this.trainingService.getChapterById(trainingId);
+        return this.trainingService.getTrainingById(trainingId);
     }
 
-    // @Post()
-    // async createTraining(
-    //     @Body('title') title: string,
-    //     @Body('description') description: string,
-    //     @Body('duration') duration: number
-    // ) : Promise<Training> {
-
-    // }
+    @Post()
+    async createTraining(@Body('title') title: string) : Promise<Training> {
+        return this.trainingService.createTraining(title);
+    }
 
     // @Put(':id')
     // async updateTraining(

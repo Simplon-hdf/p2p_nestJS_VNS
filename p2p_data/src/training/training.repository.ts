@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Training } from "src/entities/training.entity";
-import { DataSource } from "typeorm"
+import { DataSource, Repository } from "typeorm"
 
 // Creation of a custom repository.
 @Injectable()
@@ -19,8 +19,10 @@ export class TrainingRepository{
         return this.trainingRepository.find();
     }
 
-    createTraining(){
-
+    createTraining(title: string){
+        const training = this.trainingRepository
+        .create({title});
+        return this.trainingRepository.save(training);
     }
     
     //   async updateTraining(trainingId: number): Promise<Training> {

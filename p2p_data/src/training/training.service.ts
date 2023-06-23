@@ -9,12 +9,12 @@ export class TrainingService {
         private readonly trainingRepository: TrainingRepository,
       ) {}
 
-    async getAllChapters(): Promise<Training[]> {
+    async getAllTrainings(): Promise<Training[]> {
         const trainings = await this.trainingRepository.getAllTrainings();
         return [ ... trainings ];
     }
 
-    async getChapterById(trainingId: number): Promise<Training> {
+    async getTrainingById(trainingId: number): Promise<Training> {
         const training = await this.trainingRepository.getTrainingByID(trainingId);
         if(!training){
             throw new NotFoundException('Training not found');
@@ -22,9 +22,10 @@ export class TrainingService {
         return { ... training };
     }
     
-    //   async createChapter(title: string, description: string, duration: number): Promise<Training> {
-
-    //   }
+    async createTraining(title: string): Promise<Training> {
+        const training = await this.trainingRepository.createTraining(title);
+        return { ... training }; // Unpack elements and create a new object to avoid sending references.
+    }
     
     //   async updateChapter(trainingId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Training> {
 
