@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ChapterRepository } from './chapter.repository';
 import { Chapter } from 'src/entities/chapter.entity';
 
@@ -28,8 +28,12 @@ export class ChapterService {
     }
 
     async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean): Promise<Chapter> {
-        const chapter = await this.chapterRepository.updateChapter(chapterId, title, description, duration, isActive);
-        return { ... chapter };
+      if(!await this.chapterRepository.getChapterByID(chapterId)){
+        throw new NotFoundException('Chapter to update not found');  
+      }  
+      
+      const chapter = await this.chapterRepository.updateChapter(chapterId, title, description, duration, isActive);
+      return { ... chapter };
     }
 
     async deleteChapter(chapterId: number): Promise<string> {
