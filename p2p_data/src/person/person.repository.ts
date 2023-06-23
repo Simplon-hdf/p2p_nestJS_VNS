@@ -26,7 +26,7 @@ export class PersonRepository {
         });
     }
 
-    async createPerson(
+    async CreatePerson(
         lastName: string, firstName: string, email: string,
         password: string, adress: string, birthday: Date, isActive: boolean
     ): Promise<Person> {
