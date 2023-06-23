@@ -8,7 +8,7 @@ export class PersonController {
     constructor(private readonly personService: PersonService) { }
 
     @Get()
-    GetAllPersons() {
+    GetAllPersons(){
         return this.personService.GetAllPersons();
     }
 
