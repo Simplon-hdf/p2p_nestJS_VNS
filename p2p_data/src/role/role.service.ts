@@ -29,6 +29,15 @@ export class RoleService {
         return { ...role };
     }
 
+    // Search one role by NAME
+    async GetRoleByName(name: string): Promise<Role> {
+        const role = await this.roleRepository.GetRoleByName(name);
+        if (!role) {
+            throw new Error("Error, role not found !");
+        }
+        return { ...role };
+    }
+
     // Create one role if didn't exist
     async createRole(
         idRole: number,

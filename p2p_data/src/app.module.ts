@@ -8,6 +8,7 @@ import { PermissionModule } from './permission/permission.module';
 import { TrainingModule } from './training/training.module';
 import { ChapterModule } from './chapter/chapter.module';
 import { PersonModule } from './person/person.module';
+import { PersonTrainingModule } from './person-training/person-training.module';
 
 @Module({
     controllers: [AppController],
@@ -28,6 +29,6 @@ import { PersonModule } from './person/person.module';
             }),
             inject: [ConfigService],
           }),
-        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule ],
+        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, PersonTrainingModule ],
 })
 export class AppModule { }

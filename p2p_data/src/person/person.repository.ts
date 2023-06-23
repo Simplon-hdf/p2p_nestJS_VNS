@@ -13,7 +13,7 @@ export class PersonRepository {
     // Search all users
     async GetAllPersons(): Promise<Person[]> {
         try {
-            return await this.personRepository.find()
+            return await this.personRepository.find({ relations: { role: true } })
         } catch (error) {
             return error;
         }
@@ -22,8 +22,9 @@ export class PersonRepository {
     // Search one user by ID
     async GetPersonById(personId: number): Promise<Person> {
         try {
-            return await this.personRepository.findOneBy({
-                id: personId
+            return await this.personRepository.findOne({
+                where: { id: personId },
+                relations: { role: true }
             });
         } catch (error) {
             return error;
@@ -34,8 +35,9 @@ export class PersonRepository {
     // Search one users by EMAIL
     async GetPersonByEmail(email: string): Promise<Person> {
         try {
-            return await this.personRepository.findOneBy({
-                email: email
+            return await this.personRepository.findOne({
+                where: { email: email },
+                relations: { role: true } 
             });
         } catch (error) {
             return error;

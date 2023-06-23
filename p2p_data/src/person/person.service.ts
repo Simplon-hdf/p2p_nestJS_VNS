@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Person } from '../entities/person.entity';
 import { PersonRepository } from '../person/person.repository';
+import { RoleRepository } from '../role/role.repository';
 
 
 @Injectable()
@@ -9,6 +10,7 @@ export class PersonService {
     constructor(
         @Inject(PersonRepository)
         private readonly personRepository: PersonRepository,
+        private readonly roleRepository: RoleRepository,
     ) { }
 
     // Search all users
