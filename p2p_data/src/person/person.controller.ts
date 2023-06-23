@@ -32,8 +32,7 @@ export class PersonController {
         const adresse = req.body.adresse;
         const birthday = req.body.birthday;
         const isActive = req.body.isActive;
-        const role = req.body.role;
-        return this.personService.createPerson(lastName,firstName,email,password,adresse,birthday,isActive,role);
+        return this.personService.createPerson(lastName,firstName,email,password,adresse,birthday,isActive);
     }
 
 

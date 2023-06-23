@@ -11,6 +11,8 @@ export class PersonService {
         private readonly personRepository: PersonRepository,
     ) { }
 
+
+
     async GetAllPersons(): Promise<Person[]> {
         const persons = await this.personRepository.GetAllPersons();
         if (!persons) {
@@ -19,7 +21,9 @@ export class PersonService {
         return [...persons];
     }
 
-    async GetPersonById(personId: number): Promise<Person> {
+
+
+    async GetPersonById(personId : number): Promise<Person> {
         const person = await this.personRepository.GetPersonById(personId);
         if (!person) {
             throw new Error("Erreur, personne non trouvée !");
@@ -27,7 +31,9 @@ export class PersonService {
         return { ...person };
     }
 
-    async GetPersonByEmail(email: string): Promise<Person> {
+
+
+    async GetPersonByEmail(email : string): Promise<Person> {
         const person = await this.personRepository.GetPersonByEmail(email);
         if (!person) {
             throw new Error("Erreur, personne non trouvée !");
@@ -35,23 +41,28 @@ export class PersonService {
         return { ...person };
     }
 
+
+
     async createPerson(
-        lastName: string,
-        firstName: string,
-        email: string,
-        password: string,
-        adress: string,
-        birthday: Date,
+        lastName: string, 
+        firstName: string, 
+        email: string, 
+        password: string, 
+        adress: string, 
+        birthday: Date, 
         isActive: boolean
-    ): Promise<Person> {
+        ): Promise<Person> {
 
-        const personInBDD = await this.personRepository.GetPersonByEmail(email);
+        const personInBdd = await this.personRepository.GetPersonByEmail(email);
 
-        if (personInBDD) {
-            throw new Error("Erreur: cet utilisateur existe déjà !");
+        if (personInBdd) {
+            throw new Error("Erreur : cet utilisateur existe déjà !");
+
         } else {
-            const newPerson = await this.personRepository.CreatePerson(firstName, lastName, email, password, adress, birthday, isActive);
-            return { ...newPerson };
+            const newPerson = await this.personRepository.CreatePerson(
+                firstName, lastName, email, password, adress, birthday, isActive
+            );
+           return { ... newPerson }
         }
     }
 
