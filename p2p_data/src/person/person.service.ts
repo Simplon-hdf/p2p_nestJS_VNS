@@ -11,6 +11,8 @@ export class PersonService {
         private readonly personRepository: PersonRepository,
     ) { }
 
+
+
     async GetAllPersons(): Promise<Person[]> {
         const persons = await this.personRepository.GetAllPersons();
         if (!persons){
@@ -18,6 +20,8 @@ export class PersonService {
         }
         return [ ...persons ];
     }
+
+
 
     async GetPersonById(personId : number): Promise<Person> {
         const person = await this.personRepository.GetPersonById(personId);
@@ -27,6 +31,8 @@ export class PersonService {
         return { ...person };
     }
 
+
+
     async GetPersonByEmail(email : string): Promise<Person> {
         const person = await this.personRepository.GetPersonByEmail(email);
         if (!person){
@@ -35,15 +41,29 @@ export class PersonService {
         return { ...person };
     }
 
+
+
     async createPerson(
-        lastName: string, firstName: string, email: string, password: string, 
-        adress: string, birthday: Date, isActive: boolean, role: number
+        lastName: string, 
+        firstName: string, 
+        email: string, 
+        password: string, 
+        adress: string, 
+        birthday: Date, 
+        isActive: boolean
         ): Promise<Person> {
-        const person = await this.personRepository.createPerson(firstName, lastName, email, password, adress, birthday, isActive, role);
-        if (!person){
-            throw new Error("Erreur, utilisateur non enregistré !");
+
+        const personInBdd = await this.personRepository.GetPersonByEmail(email);
+
+        if (personInBdd) {
+            throw new Error("Erreur : cet utilisateur existe déjà !");
+
+        } else {
+            const newPerson = await this.personRepository.CreatePerson(
+                firstName, lastName, email, password, adress, birthday, isActive
+            );
+           return { ... newPerson }
         }
-        return { ...person };
     }
 
 

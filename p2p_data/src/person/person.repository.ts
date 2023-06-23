@@ -26,20 +26,20 @@ export class PersonRepository {
         });
     }
 
-    async createPerson(
-        lastName: string, firstName: string, email: string,
-        password: string, adress: string, birthday: Date, isActive: boolean
+    async CreatePerson(
+        lastName: string, 
+        firstName: string, 
+        email: string,
+        password: string, 
+        adress: string, 
+        birthday: Date, 
+        isActive: boolean
     ): Promise<Person> {
+
         const person = await this.personRepository.create(
             { firstName, lastName, email, password, adress, birthday, isActive }
         );
         return this.personRepository.save(person);
     }
-
-
-    // async createPerson(name: string, email: string, password: string): Promise<Person> {
-    //     const person = this.create({ email, password });
-    //     return this.save(person);
-    // }
 
 }
