@@ -25,7 +25,7 @@ export class LessonService {
     
     async createLesson(title: string, goal: string, subject: string): Promise<Lesson> {
         const lesson = await this.lessonRepository.createLesson(title, goal, subject);
-        return { ... lesson }; // Unpack elements and create a new object to avoid sending references.
+        return { ... lesson };
     }
     
     async updateLesson(lessonId: number, title: string, goal: string, subject: string, isActive: boolean): Promise<Lesson> {
