@@ -43,7 +43,7 @@ export class PersonController {
     // Update one
     @Put(':id')
     async updatePerson(@Param('id') personId: number, @Req() req): Promise<Person> {
-        
+
         const lastName = req.body.lastName;
         const firstName = req.body.firstName;
         const email = req.body.email;
@@ -58,7 +58,14 @@ export class PersonController {
         return updatedPerson;
     }
 
-    // Delete one
+    // SOFT Delete
+    @Put('disable/:id')
+    async disabledPerson(@Param('id') personId: number): Promise<Person> {
+        const updatedPerson = await this.personService.disabledPerson(personId);
+        return updatedPerson;
+    }
+
+    // HARD Delete
     @Delete(':id')
     async deletePerson(@Param('id') personId: number): Promise<string> {
         const deletedPerson = await this.personService.deletePerson(personId);

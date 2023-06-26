@@ -86,7 +86,19 @@ export class PersonService {
         }
     }
 
-    // Delete one
+    // SOFT Delete
+    async disabledPerson( personId: number ): Promise<Person> {
+        const personInBdd = await this.personRepository.GetPersonById(personId);
+        if (!personInBdd) {
+            throw new NotFoundException('Person to update not found');
+        }
+        else {
+            const personUpdated = await this.personRepository.disabledPerson( personId );
+            return personUpdated;
+        }
+    }
+
+    // HARD Delete
     async deletePerson(personId: number): Promise<string> {
         const deletedPerson = await this.personRepository.deletePerson(personId);
         return deletedPerson
