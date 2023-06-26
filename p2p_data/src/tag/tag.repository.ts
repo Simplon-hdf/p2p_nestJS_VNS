@@ -12,15 +12,12 @@ export class TagRepository {
 
     getTagByID(tagId: number){
         return this.tagRepository.findOne({
-            where: {id: tagId},
-            relations: {trainings: true}
+            where: {id: tagId}
         });
     }
 
     getAllTags(){
-        return this.tagRepository.find({
-            relations: {trainings: true}
-        });
+        return this.tagRepository.find();
     }
 
     createTag(name: string){
@@ -29,12 +26,11 @@ export class TagRepository {
         return this.tagRepository.save(tag);
     }
 
-    async updateTag(tagId: number, name: string, isActive: boolean, trainings: Training[]): Promise<Tag> {
-        const tag = await this.tagRepository.findOneBy({id: tagId});
-        tag.name = name;
-        tag.isActive = isActive;
-        tag.trainings = trainings;
-        return this.tagRepository.save(tag);
+    async updateTag(currentTag: Tag, name: string, isActive: boolean, trainings: Training[]): Promise<Tag> {
+        currentTag.name = name;
+        currentTag.isActive = isActive;
+        currentTag.trainings = trainings;
+        return this.tagRepository.save(currentTag);
     }
 
     deleteTag(tagId: number){

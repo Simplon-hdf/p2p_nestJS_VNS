@@ -33,20 +33,20 @@ export class TagService {
     }
 
     async updateTag(tagId: number, name: string, isActive: boolean, trainingsId: number[]): Promise<Tag> {
-        if(await this.tagRepository.getTagByID(tagId)){
+        const currentTag = await this.getTagById(tagId);
 
-            if(trainingsId.length > 0){
-                //Get all trainings by given trainings Id
-                var trainings: Training[] = []; //Do not forget to initialize it as empty...
-                for(var trainingId of trainingsId) { 
-                    var training = await this.trainingRepository.getTrainingByID(trainingId); 
-                    if(training) trainings.push(training);
-                }
+        if(trainingsId.length > 0){
+            //Get all trainings by given trainings Id
+            var trainings = new Array();
+            for(var trainingId of trainingsId) { 
+                var training = await this.trainingRepository.getTrainingByID(trainingId); 
+                if(training) trainings.push(training);
             }
-            
-            const tag = await this.tagRepository.updateTag(tagId, name, isActive, trainings);
-            return { ... tag };
         }
+        
+        const tag = await this.tagRepository.updateTag(currentTag, name, isActive, trainings);
+        return { ... tag };
+    
     }
 
     async deleteTag(tagId: number): Promise<string> {
