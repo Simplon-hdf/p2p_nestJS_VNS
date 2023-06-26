@@ -16,13 +16,13 @@ export class TrainingService {
 
     async getAllTrainings(): Promise<Training[]> {
         const trainings = await this.trainingRepository.getAllTrainings();
-        return trainings;
+        return [ ... trainings ];
     }
 
     async getTrainingById(trainingId: number): Promise<Training> {
         try{
             const training = await this.trainingRepository.getTrainingByID(trainingId);
-            return training;
+            return { ... training };
         } catch {
             throw new NotFoundException('Training not found');
         }
@@ -30,7 +30,7 @@ export class TrainingService {
     
     async createTraining(title: string): Promise<Training> {
         const training = await this.trainingRepository.createTraining(title);
-        return training; // Unpack elements and create a new object to avoid sending references.
+        return { ... training } ; // Unpack elements and create a new object to avoid sending references.
     }
     
     async updateTraining(trainingId: number, title: string, isActive: boolean, tagId: number): Promise<Training> {
@@ -39,7 +39,7 @@ export class TrainingService {
         if(tagId != undefined) 
             tag = await this.tagRepository.getTagByID(tagId);
         
-        return await this.trainingRepository.updateTraining(previousTraining, title, isActive, tag);
+        return { ... await this.trainingRepository.updateTraining(previousTraining, title, isActive, tag) };
     }
     
     async deleteTraining(trainingId: number): Promise<string> {
