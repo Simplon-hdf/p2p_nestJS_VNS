@@ -1,6 +1,7 @@
 // import { EntityRepository, Repository } from 'typeorm';
 import { Injectable } from "@nestjs/common";
 import { Person } from '../entities/person.entity';
+import { Role } from '../entities/role.entity';
 import { DataSource } from 'typeorm';
 
 
@@ -9,6 +10,7 @@ export class PersonRepository {
 
     constructor(private dataSource: DataSource) { }
     personRepository = this.dataSource.getRepository(Person);
+    roleRepository = this.dataSource.getRepository(Role);
 
     // Search all users
     async GetAllPersons(): Promise<Person[]> {
@@ -53,12 +55,15 @@ export class PersonRepository {
         password: string,
         adress: string,
         birthday: Date,
-        isActive: boolean
+        isActive: boolean,
+        roleId: number
     ): Promise<Person> {
         try {
+            const rolePerson = await this.roleRepository.findOne({ where: { id: roleId } });
             const person = await this.personRepository.create(
                 { firstName, lastName, email, password, adress, birthday, isActive }
             );
+            person.role = rolePerson;
             return this.personRepository.save(person);
         } catch (error) {
             return error;
@@ -74,11 +79,13 @@ export class PersonRepository {
         password: string,
         adress: string,
         birthday: Date,
-        isActive: boolean
+        isActive: boolean,
+        roleId: number
     ): Promise<Person> {
 
         try {
             const person = await this.personRepository.findOneBy({ id: personId });
+            const rolePerson = await this.roleRepository.findOne({ where: { id: roleId } });
             person.lastName = lastName;
             person.firstName = firstName;
             person.email = email;
@@ -86,6 +93,7 @@ export class PersonRepository {
             person.adress = adress;
             person.birthday = birthday;
             person.isActive = isActive;
+            person.role = rolePerson;
             return this.personRepository.save(person);
         } catch (error) {
             return error;
