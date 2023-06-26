@@ -25,9 +25,10 @@ export class TrainingController {
     async updateTraining(
         @Param('id') trainingID: number,
         @Body('title') title: string,
-        @Body('isActive') isActive: boolean
+        @Body('isActive') isActive: boolean,
+        @Body('tag') tagId: number
     ) : Promise<Training> {
-        return this.trainingService.updateTraining(trainingID, title, isActive);
+        return this.trainingService.updateTraining(trainingID, title, isActive, tagId);
     }
 
     @Delete(':id')
