@@ -92,11 +92,28 @@ export class PersonRepository {
         }
     }
 
-    // Delete one users
+    // HARD DELETE
     deletePerson(personId: number) {
         try {
             this.personRepository.delete(personId);
             return "Person is deleted";
+        } catch (error) {
+            return error;
+        }
+    }
+
+    // SOFT Delete
+    async disabledPerson( personId: number ): Promise<Person> {
+        try {
+            const person = await this.personRepository.findOneBy({ id: personId });
+            person.lastName = "Anonyme";
+            person.firstName = "Anonyme";
+            person.email = "Anonyme";
+            person.password = "0000";
+            person.adress = "Anonyme";
+            person.birthday = new Date();
+            person.isActive = false;
+            return this.personRepository.save(person);
         } catch (error) {
             return error;
         }
