@@ -21,18 +21,22 @@ export class PersonTrainingController {
 
     // Create one if didn't exist
     @Post()
-    async createPersonTraining(@Param('id') idPersonTraining: number, @Req() req) {
+    async createPersonTraining(@Req() req) {
+        const personId = req.body.person;
+        const trainingId = req.body.training;
         const isAuthor = req.body.isAuthor;
         const isActive = req.body.isActive;
-        return await this.personTrainingService.createPersonTraining(idPersonTraining, isAuthor, isActive);
+        return await this.personTrainingService.createPersonTraining(isAuthor, isActive, personId, trainingId);
     }
 
     // Update one
     @Put(':id')
     async updatePersonTraining(@Param('id') personTrainingId: number, @Req() req): Promise<PersonTraining> {
+        const person = req.body.person;
+        const training = req.body.training;
         const isAuthor = req.body.isAuthor;
         const isActive = req.body.isActive;
-        const updatedPersonTraining = await this.personTrainingService.updatePersonTraining(personTrainingId, isAuthor, isActive);
+        const updatedPersonTraining = await this.personTrainingService.updatePersonTraining(personTrainingId, isAuthor, isActive, person, training);
         return updatedPersonTraining;
     }
 

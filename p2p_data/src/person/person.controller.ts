@@ -36,8 +36,9 @@ export class PersonController {
         const adress = req.body.adress;
         const birthday = req.body.birthday;
         const isActive = req.body.isActive;
+        const roleId = req.body.role;
 
-        return this.personService.createPerson(lastName, firstName, email, password, adress, birthday, isActive);
+        return this.personService.createPerson(lastName, firstName, email, password, adress, birthday, isActive, roleId);
     }
 
     // Update one
@@ -51,9 +52,10 @@ export class PersonController {
         const adress = req.body.adress;
         const birthday = req.body.birthday;
         const isActive = req.body.isActive;
+        const roleId = req.body.role;
 
         const updatedPerson = await this.personService.updatePerson(
-            personId, lastName, firstName, email, password, adress, birthday, isActive
+            personId, lastName, firstName, email, password, adress, birthday, isActive, roleId
         );
         return updatedPerson;
     }
