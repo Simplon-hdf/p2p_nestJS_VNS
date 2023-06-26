@@ -25,7 +25,7 @@ export class TrainingRepository{
         return this.trainingRepository.save(training);
     }
     
-    updateTraining(trainingToUpdate: Training, trainingId: number, title: string, isActive: boolean): Promise<Training> {
+    updateTraining(trainingToUpdate: Training, title: string, isActive: boolean): Promise<Training> {
         trainingToUpdate.title = title;
         trainingToUpdate.isActive = isActive;
         return this.trainingRepository.save(trainingToUpdate);

@@ -30,7 +30,7 @@ export class TrainingService {
     
     async updateTraining(trainingId: number, title: string, isActive: boolean): Promise<Training> {
         const previousTraining = await this.getTrainingById(trainingId);
-        const training = await this.trainingRepository.updateTraining(previousTraining, trainingId, title, isActive);
+        const training = await this.trainingRepository.updateTraining(previousTraining, title, isActive);
         return { ... training };
     }
     
