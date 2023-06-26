@@ -8,8 +8,10 @@ import { PermissionModule } from './permission/permission.module';
 import { TrainingModule } from './training/training.module';
 import { ChapterModule } from './chapter/chapter.module';
 import { PersonModule } from './person/person.module';
+import { PersonTrainingModule } from './person-training/person-training.module';
 import { LessonModule } from './lesson/lesson.module';
 import { TagModule } from './tag/tag.module';
+
 
 @Module({
     controllers: [AppController],
@@ -30,6 +32,8 @@ import { TagModule } from './tag/tag.module';
             }),
             inject: [ConfigService],
           }),
-        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, LessonModule, TagModule ],
+
+        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, LessonModule, PersonTrainingModule, TagModule ],
+
 })
 export class AppModule { }

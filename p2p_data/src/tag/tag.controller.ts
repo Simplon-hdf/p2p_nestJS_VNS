@@ -18,7 +18,7 @@ export class TagController {
 
     @Post()
     async createTag(
-        @Body('title') name: string
+        @Body('name') name: string
     ) : Promise<Tag> {
         const generatedTag = await this.tagService.createTag(name);
         return generatedTag;
@@ -27,7 +27,7 @@ export class TagController {
     @Put(':id')
     async updateTag(
         @Param('id') tagId: number,
-        @Body('title') name: string,
+        @Body('name') name: string,
         @Body('isActive') isActive: boolean
     ) : Promise<Tag> {
         const updatedTag = await this.tagService.updateTag(tagId, name, isActive);

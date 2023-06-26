@@ -10,20 +10,21 @@ export class RoleRepository {
     constructor(private dataSource: DataSource) { }
     roleRepository = this.dataSource.getRepository(Role);
 
-    // Search all roles
+    // Search all 
     async GetAllRoles(): Promise<Role[]> {
         try {
-            return await this.roleRepository.find()
+            return await this.roleRepository.find({ relations: { persons: true } })
         } catch (error) {
             return error;
         }
     }
 
-    // Search one user by ID
+    // Search one by ID
     async GetRoleById(roleId: number): Promise<Role> {
         try {
-            return await this.roleRepository.findOneBy({
-                id: roleId
+            return await this.roleRepository.findOne({
+                where: { id: roleId },
+                relations: { persons: true }
             });
         } catch (error) {
             return error;
@@ -31,11 +32,12 @@ export class RoleRepository {
 
     }
 
-    // Search one users by NAME
+    // Search one by NAME
     async GetRoleByName(name: string): Promise<Role> {
         try {
-            return await this.roleRepository.findOneBy({
-                name: name
+            return await this.roleRepository.findOne({
+                where: { name: name },
+                relations: { persons: true }
             });
         } catch (error) {
             return error;
@@ -43,7 +45,7 @@ export class RoleRepository {
 
     }
 
-    // Create one user if didn't exist
+    // Create one if didn't exist
     async CreateRole(
         name: string,
         isActive: boolean
@@ -58,7 +60,7 @@ export class RoleRepository {
         }
     }
 
-    // Update one users
+    // Update one
     async updateRole(
         idRole: number,
         name: string,
@@ -75,7 +77,7 @@ export class RoleRepository {
         }
     }
 
-    // Delete one users
+    // Delete one
     deleteRole(roleId: number) {
         try {
             this.roleRepository.delete(roleId);
