@@ -1,8 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { userInfo } from "os";
 import { Chapter } from "src/entities/chapter.entity";
-import { isatty } from "tty";
-import { DataSource } from "typeorm"
+import { DataSource } from "typeorm";
 
 // Creation of a custom repository.
 @Injectable()
@@ -13,8 +11,8 @@ export class ChapterRepository {
 
   getChapterByID(chapterId: number){
     return this.chapterRepository.findOneBy({
-        id: chapterId
-    });
+        id: chapterId    
+      });
       // .createQueryBuilder("chapter")
       // .where("chapter.id = :id", {chapterId})
       // .getOne()

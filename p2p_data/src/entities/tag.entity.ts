@@ -10,6 +10,9 @@ export class Tag {
 
     @Column()
     name: string;
+
+    @Column({default: true})
+    isActive: boolean;
     
     @OneToMany(() => Training, (training => training.tag))
     trainings: Training[];
