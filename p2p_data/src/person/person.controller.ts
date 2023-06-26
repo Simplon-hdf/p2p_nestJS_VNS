@@ -7,26 +7,26 @@ export class PersonController {
 
     constructor(private readonly personService: PersonService) { }
 
-    // Search all users
+    // Search all
     @Get()
     GetAllPersons() {
         return this.personService.GetAllPersons();
     }
 
-    // Search one user by ID
+    // Search one by ID
     @Get('id/:id')
     GetPersonById(@Param('id') personId: number) {
         return this.personService.GetPersonById(personId);
     }
 
-    // Search one users by EMAIL
+    // Search one by EMAIL
     @Get('email')
     GetPersonByEmail(@Req() req) {
         const email = req.body.email;
         return this.personService.GetPersonByEmail(email);
     }
 
-    // Create one user if didn't exist
+    // Create one if didn't exist
     @Post()
     async createPerson(@Req() req) {
         const lastName = req.body.lastName;
@@ -40,7 +40,7 @@ export class PersonController {
         return this.personService.createPerson(lastName, firstName, email, password, adress, birthday, isActive);
     }
 
-    // Update one users
+    // Update one
     @Put(':id')
     async updatePerson(@Param('id') personId: number, @Req() req): Promise<Person> {
         
@@ -58,7 +58,7 @@ export class PersonController {
         return updatedPerson;
     }
 
-    // Delete one users
+    // Delete one
     @Delete(':id')
     async deletePerson(@Param('id') personId: number): Promise<string> {
         const deletedPerson = await this.personService.deletePerson(personId);

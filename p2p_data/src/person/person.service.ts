@@ -13,7 +13,7 @@ export class PersonService {
         private readonly roleRepository: RoleRepository,
     ) { }
 
-    // Search all users
+    // Search all
     async GetAllPersons(): Promise<Person[]> {
         const persons = await this.personRepository.GetAllPersons();
         if (!persons) {
@@ -22,7 +22,7 @@ export class PersonService {
         return [...persons];
     }
 
-    // Search one user by ID
+    // Search one by ID
     async GetPersonById(personId: number): Promise<Person> {
         const person = await this.personRepository.GetPersonById(personId);
         if (!person) {
@@ -31,7 +31,7 @@ export class PersonService {
         return { ...person };
     }
 
-    // Search one users by EMAIL
+    // Search one by EMAIL
     async GetPersonByEmail(email: string): Promise<Person> {
         const person = await this.personRepository.GetPersonByEmail(email);
         if (!person) {
@@ -40,7 +40,7 @@ export class PersonService {
         return { ...person };
     }
 
-    // Create one user if didn't exist
+    // Create one if didn't exist
     async createPerson(
         lastName: string,
         firstName: string,
@@ -62,7 +62,7 @@ export class PersonService {
         }
     }
 
-    // Update one users
+    // Update one
     async updatePerson(
         personId: number,
         lastName: string,
@@ -86,7 +86,7 @@ export class PersonService {
         }
     }
 
-    // Delete one users
+    // Delete one
     async deletePerson(personId: number): Promise<string> {
         const deletedPerson = await this.personRepository.deletePerson(personId);
         return deletedPerson
