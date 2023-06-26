@@ -48,7 +48,8 @@ export class PersonService {
         password: string,
         adress: string,
         birthday: Date,
-        isActive: boolean
+        isActive: boolean,
+        roleId: number
     ): Promise<Person> {
 
         const personInBdd = await this.personRepository.GetPersonByEmail(email);
@@ -56,7 +57,7 @@ export class PersonService {
             throw new Error("Error : This user already exist !");
         } else {
             const newPerson = await this.personRepository.CreatePerson(
-                firstName, lastName, email, password, adress, birthday, isActive
+                firstName, lastName, email, password, adress, birthday, isActive, roleId
             );
             return { ...newPerson }
         }
@@ -71,7 +72,8 @@ export class PersonService {
         password: string,
         adress: string,
         birthday: Date,
-        isActive: boolean
+        isActive: boolean,
+        roleId: number
     ): Promise<Person> {
 
         const personInBdd = await this.personRepository.GetPersonByEmail(email);
@@ -80,7 +82,7 @@ export class PersonService {
         }
         else {
             const personUpdated = await this.personRepository.updatePerson(
-                personId, lastName, firstName, email, password, adress, birthday, isActive
+                personId, lastName, firstName, email, password, adress, birthday, isActive, roleId
             );
             return personUpdated;
         }
