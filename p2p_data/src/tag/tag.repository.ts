@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Tag } from "src/entities/tag.entity";
+import { Training } from "src/entities/training.entity";
 import { DataSource } from "typeorm";
 
 // Creation of a custom repository.
@@ -10,8 +11,8 @@ export class TagRepository {
     tagRepository = this.dataSource.getRepository(Tag);
 
     getTagByID(tagId: number){
-        return this.tagRepository.findOneBy({
-            id: tagId
+        return this.tagRepository.findOne({
+            where: {id: tagId}
         });
     }
 
@@ -25,11 +26,11 @@ export class TagRepository {
         return this.tagRepository.save(tag);
     }
 
-    async updateTag(tagId: number, name: string, isActive: boolean): Promise<Tag> {
-        const tag = await this.tagRepository.findOneBy({id: tagId});
-        tag.name = name;
-        tag.isActive = isActive;
-        return this.tagRepository.save(tag);
+    async updateTag(currentTag: Tag, name: string, isActive: boolean, trainings: Training[]): Promise<Tag> {
+        currentTag.name = name;
+        currentTag.isActive = isActive;
+        currentTag.trainings = trainings;
+        return this.tagRepository.save(currentTag);
     }
 
     deleteTag(tagId: number){

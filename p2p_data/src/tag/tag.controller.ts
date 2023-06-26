@@ -28,9 +28,10 @@ export class TagController {
     async updateTag(
         @Param('id') tagId: number,
         @Body('name') name: string,
-        @Body('isActive') isActive: boolean
+        @Body('isActive') isActive: boolean,
+        @Body('trainings') trainings: number[]
     ) : Promise<Tag> {
-        const updatedTag = await this.tagService.updateTag(tagId, name, isActive);
+        const updatedTag = await this.tagService.updateTag(tagId, name, isActive, trainings);
         return updatedTag;
     }
 

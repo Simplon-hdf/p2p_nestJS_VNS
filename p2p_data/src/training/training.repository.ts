@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { Tag } from "src/entities/tag.entity";
 import { Training } from "src/entities/training.entity";
 import { DataSource, Repository } from "typeorm"
 
@@ -10,13 +11,14 @@ export class TrainingRepository{
     trainingRepository = this.dataSource.getRepository(Training);
 
     getTrainingByID(trainingId: number){
-        return this.trainingRepository.findOneBy({
-            id: trainingId
+        return this.trainingRepository.findOne({
+            where: {id: trainingId},
+            relations: {tag: true}
         });
     }
     
     getAllTrainings(){
-        return this.trainingRepository.find();
+        return this.trainingRepository.find({relations: {tag: true}});
     }
 
     createTraining(title: string){
@@ -25,9 +27,10 @@ export class TrainingRepository{
         return this.trainingRepository.save(training);
     }
     
-    updateTraining(trainingToUpdate: Training, trainingId: number, title: string, isActive: boolean): Promise<Training> {
+    updateTraining(trainingToUpdate: Training, title: string, isActive: boolean, tag: Tag): Promise<Training> {
         trainingToUpdate.title = title;
         trainingToUpdate.isActive = isActive;
+        if(tag) trainingToUpdate.tag = tag;
         return this.trainingRepository.save(trainingToUpdate);
     }
     
