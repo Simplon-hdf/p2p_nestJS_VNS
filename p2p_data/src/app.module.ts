@@ -10,6 +10,7 @@ import { ChapterModule } from './chapter/chapter.module';
 import { PersonModule } from './person/person.module';
 import { PersonTrainingModule } from './person-training/person-training.module';
 import { LessonModule } from './lesson/lesson.module';
+import { TagModule } from './tag/tag.module';
 
 
 @Module({
@@ -32,7 +33,7 @@ import { LessonModule } from './lesson/lesson.module';
             inject: [ConfigService],
           }),
 
-        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, LessonModule, PersonTrainingModule ],
+        RoleModule, PermissionModule, TrainingModule, ChapterModule, PersonModule, LessonModule, PersonTrainingModule, TagModule ],
 
 })
 export class AppModule { }
