@@ -11,12 +11,12 @@ export class TrainingController {
         return this.trainingService.getAllTrainings();
     }
 
-    @Get(':id/:id')
+    @Get('id/:id')
     getTrainingById(@Param('id') trainingId : number) {
         return this.trainingService.getTrainingById(trainingId);
     }
 
-    @Get(':search')
+    @Get('search')
     searchByName(@Body('title') searchedTitle: string) {
         return this.trainingService.searchByName(searchedTitle);
     }

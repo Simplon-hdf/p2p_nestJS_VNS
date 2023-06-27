@@ -11,12 +11,12 @@ export class ChapterController {
         return this.chapterService.getAllChapters();
     }
 
-    @Get(':id/:id')
+    @Get('id/:id')
     getChapterById(@Param('id') chapterId : number) {
         return this.chapterService.getChapterById(chapterId);
     }
 
-    @Get(':search')
+    @Get('search')
     searchByName(@Body('title') searchedTitle: string) {
         return this.chapterService.searchByName(searchedTitle);
     }
