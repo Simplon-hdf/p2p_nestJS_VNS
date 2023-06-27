@@ -24,12 +24,6 @@ export class Lesson {
     @ManyToOne(() => Tag, (tag) => tag.id)
     tag: Tag;
 
-
-    @ManyToMany(() => Chapter, (chapter) => chapter.id)
+    @ManyToMany(() => Chapter, (chapter) => chapter.lessons)
     chapters: Chapter[]
-
-    // @ManyToMany(() => Chapter, chapter => chapter.id,
-    //     { onDelete: 'NO ACTION', onUpdate: 'NO ACTION', },
-    // )
-    // chapters?: Chapter[];
 }

@@ -33,14 +33,15 @@ export class LessonService {
         return { ...lesson };
     }
 
-    async updateLesson(lessonId: number, title: string, goal: string, subject: string, isActive: boolean): Promise<Lesson> {
+    async updateLesson(lessonId: number, title: string, goal: string, subject: string, isActive: boolean, chaptersIds: number[]): Promise<Lesson> {
         const previousLesson = await this.getLessonById(lessonId);
         const lesson = await this.lessonRepository.updateLesson(
             previousLesson,
             title,
             goal,
             subject,
-            isActive);
+            isActive,
+            chaptersIds);
         return { ...lesson };
     }
 

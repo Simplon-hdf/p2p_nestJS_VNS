@@ -35,30 +35,41 @@ export class LessonRepository {
         });
     }
 
-    createLesson(title: string, goal: string, subject: string, chaptersIds: number[]) {
-        const lesson = this.lessonRepository.create({ title, goal, subject });
-        let newArray = [];
-
-        for (let currentId of chaptersIds) {
-            const chapter = this.chapterRepository.findOneBy({ id: currentId });
-            newArray.push(chapter);
+    async createLesson(title: string, goal: string, subject: string, chaptersIds: number[]) {
+        let chapters = new Array();
+        if(chaptersIds.length > 0){
+            for (let currentId of chaptersIds) {
+                const chapter = await this.chapterRepository.findOneBy({ id: currentId });
+                if(chapter) chapters.push(chapter);
+            }
         }
 
-        lesson.chapters = newArray; 
+        const lesson = this.lessonRepository.create({ title, goal, subject, chapters });
         return this.lessonRepository.save(lesson);
     }
 
-    updateLesson(
+    async updateLesson(
         lessonToUpdate: Lesson,
         title: string,
         goal: string,
         subject: string,
-        isActive: boolean
+        isActive: boolean,
+        chaptersIds: number[]
     ): Promise<Lesson> {
         lessonToUpdate.title = title;
         lessonToUpdate.goal = goal;
         lessonToUpdate.subject = subject;
         lessonToUpdate.isActive = isActive;
+
+        let chapters = new Array();
+        if(chaptersIds.length > 0){
+            for (let currentId of chaptersIds) {
+                const chapter = await this.chapterRepository.findOneBy({ id: currentId });
+                if(chapter) chapters.push(chapter);
+            }
+        }
+
+        lessonToUpdate.chapters = chapters;
         return this.lessonRepository.save(lessonToUpdate);
     }
 
