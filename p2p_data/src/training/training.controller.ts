@@ -11,11 +11,16 @@ export class TrainingController {
         return this.trainingService.getAllTrainings();
     }
 
-    @Get(':id')
+    @Get('id/:id')
     getTrainingById(@Param('id') trainingId : number) {
         return this.trainingService.getTrainingById(trainingId);
     }
 
+    @Get('search')
+    searchByName(@Body('title') searchedTitle: string) {
+        return this.trainingService.searchByName(searchedTitle);
+    }
+    
     @Post()
     async createTraining(@Body('title') title: string) : Promise<Training> {
         return this.trainingService.createTraining(title);

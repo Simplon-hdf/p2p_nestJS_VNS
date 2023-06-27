@@ -22,6 +22,11 @@ export class ChapterService {git
     return { ... chapter };
   }
 
+  async searchByName(searchedName: string) : Promise<Chapter[]> {
+    const chapters = await this.chapterRepository.searchByName(searchedName);
+    return [ ... chapters ];
+  }
+
   async createChapter(title: string, description: string, duration: number): Promise<Chapter> {
       const chapter = await this.chapterRepository.createChapter(title, description, duration);
       return { ... chapter }; // Unpack elements and create a new object to avoid sending references.
