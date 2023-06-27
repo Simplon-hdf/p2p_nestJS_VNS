@@ -18,7 +18,7 @@ export class Training {
     @ManyToOne(() => Tag, (tag) => tag.trainings)
     tag: Tag;
 
-    @ManyToMany(() => Chapter)
+    @ManyToMany(() => Chapter, (chapter) => chapter.trainings)
     @JoinTable({ 
             name : "training_chapter"
         })

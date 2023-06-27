@@ -6,6 +6,7 @@ import { Chapter } from 'src/entities/chapter.entity';
 export class ChapterController {
     constructor(private readonly chapterService: ChapterService) {}
 
+    //#region Get Methods
     @Get()
     getAllChapters(){
         return this.chapterService.getAllChapters();
@@ -16,10 +17,16 @@ export class ChapterController {
         return this.chapterService.getChapterById(chapterId);
     }
 
+    @Get('trainings/:id')
+    getChapterLinkedTrainings(@Param('id') chapterId : number) {
+        return this.chapterService.getChapterLinkedTrainings(chapterId);
+    }
+
     @Get('search')
     searchByName(@Body('title') searchedTitle: string) {
         return this.chapterService.searchByName(searchedTitle);
     }
+    //#endregion
 
     @Post()
     async createChapter(
@@ -38,8 +45,16 @@ export class ChapterController {
         @Body('description') description: string,
         @Body('duration') duration: number,
         @Body('isActive') isActive: boolean,
+        @Body('trainings') trainingsId: number[]
     ) : Promise<Chapter> {
-        const updatedChapter = await this.chapterService.updateChapter(chapterId, title, description, duration, isActive);
+        const updatedChapter = await this.chapterService.updateChapter(
+            chapterId, 
+            title, 
+            description, 
+            duration, 
+            isActive, 
+            trainingsId
+        );
         return updatedChapter;
     }
 
