@@ -11,7 +11,7 @@ export class LessonController {
         return this.lessonService.getAllLessons();
     }
 
-    @Get(':id')
+    @Get(':id/:id')
     getLessonById(@Param('id') lessonId : number) {
         return this.lessonService.getLessonById(lessonId);
     }
@@ -23,6 +23,11 @@ export class LessonController {
         @Body('subject') subject: string
         ) : Promise<Lesson> {
         return this.lessonService.createLesson(title, goal, subject);
+    }
+
+    @Get(':search')
+    searchByName(@Body('title') searchedTitle: string) {
+        return this.lessonService.searchByName(searchedTitle);
     }
 
     @Put(':id')

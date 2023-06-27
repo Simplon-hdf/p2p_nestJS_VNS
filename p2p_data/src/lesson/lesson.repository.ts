@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Lesson } from "src/entities/lesson.entity";
-import { DataSource } from "typeorm";
+import { DataSource, ILike } from "typeorm";
 
 // Creation of a custom repository.
 @Injectable()
@@ -17,6 +17,13 @@ export class LessonRepository{
     
     getAllLessons(){
         return this.lessonRepository.find();
+    }
+
+    async searchByName(searchedName: string){
+        /* protected from SQL Injection */
+        return await this.lessonRepository.findBy({
+            title: ILike(`%${searchedName}%`) //ILike : case insensitive  
+        });
     }
 
     createLesson(title: string, goal: string, subject: string){
