@@ -11,6 +11,7 @@ export class TrainingRepository{
 
     trainingRepository = this.dataSource.getRepository(Training);
 
+    //#region Get Methods
     getTrainingByID(trainingId: number){
         return this.trainingRepository.findOne({
             where: {id: trainingId},
@@ -23,7 +24,7 @@ export class TrainingRepository{
     }
 
     /** Get all the chapters linked to a given training. */
-    async getTrainingChapters(training: Training) : Promise<Chapter[]> {
+    async getTrainingLinkedChapters(training: Training) : Promise<Chapter[]> {
         const result = await this.trainingRepository
             .createQueryBuilder("training")
             .leftJoinAndSelect("training.chapters", "chapter")
@@ -42,6 +43,7 @@ export class TrainingRepository{
 
         return chapters;
     }
+    //#endregion
 
     async searchByName(searchedName: string){
         /* protected from SQL Injection */

@@ -33,9 +33,9 @@ export class TrainingService {
         }
     }
 
-    async getTrainingChapters(trainingId: number) {
+    async getTrainingLinkedChapters(trainingId: number) {
         const training = await this.getTrainingById(trainingId);
-        return [... await this.trainingRepository.getTrainingChapters(training)];
+        return [... await this.trainingRepository.getTrainingLinkedChapters(training)];
     }
 
     //#endregion

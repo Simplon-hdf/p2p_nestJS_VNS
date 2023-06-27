@@ -18,8 +18,8 @@ export class TrainingController {
     }
 
     @Get('chapters/:id')
-    getTrainingChapters(@Param('id') trainingId : number) {
-        return this.trainingService.getTrainingChapters(trainingId);
+    getTrainingLinkedChapters(@Param('id') trainingId : number) {
+        return this.trainingService.getTrainingLinkedChapters(trainingId);
     }
 
     @Get(':search')
