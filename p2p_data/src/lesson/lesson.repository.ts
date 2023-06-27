@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Lesson } from "src/entities/lesson.entity";
+import { DataSource, ILike } from "typeorm";
 import { Chapter } from "src/entities/chapter.entity";
-import { DataSource } from "typeorm";
 
 // Creation of a custom repository.
 @Injectable()
@@ -28,6 +28,13 @@ export class LessonRepository {
 
     }
 
+    async searchByName(searchedName: string){
+        /* protected from SQL Injection */
+        return await this.lessonRepository.findBy({
+            title: ILike(`%${searchedName}%`) //ILike : case insensitive  
+        });
+    }
+
     createLesson(title: string, goal: string, subject: string, chaptersIds: number[]) {
         const lesson = this.lessonRepository.create({ title, goal, subject });
         let newArray = [];
@@ -37,8 +44,7 @@ export class LessonRepository {
             newArray.push(chapter);
         }
 
-        lesson.chapters = newArray;  
-
+        lesson.chapters = newArray; 
         return this.lessonRepository.save(lesson);
     }
 

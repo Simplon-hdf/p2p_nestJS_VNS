@@ -1,12 +1,17 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { TagRepository } from './tag.repository';
 import { Tag } from 'src/entities/tag.entity';
+import { Training } from 'src/entities/training.entity';
+import { TrainingRepository } from 'src/training/training.repository';
 
 @Injectable()
 export class TagService {
     constructor(
         @Inject(TagRepository)
         private readonly tagRepository: TagRepository,
+
+        @Inject(TrainingRepository)
+        private readonly trainingRepository: TrainingRepository,
     ) {}
 
     async getAllTags(): Promise<Tag[]> {
@@ -27,11 +32,21 @@ export class TagService {
         return { ... tag }; // Unpack elements and create a new object to avoid sending references.
     }
 
-    async updateTag(tagId: number, name: string, isActive: boolean): Promise<Tag> {
-        if(await this.tagRepository.getTagByID(tagId)){
-            const tag = await this.tagRepository.updateTag(tagId, name, isActive);
-            return { ... tag };
+    async updateTag(tagId: number, name: string, isActive: boolean, trainingsId: number[]): Promise<Tag> {
+        const currentTag = await this.getTagById(tagId);
+
+        if(trainingsId.length > 0){
+            //Get all trainings by given trainings Id
+            var trainings = new Array();
+            for(var trainingId of trainingsId) { 
+                var training = await this.trainingRepository.getTrainingByID(trainingId); 
+                if(training) trainings.push(training);
+            }
         }
+        
+        const tag = await this.tagRepository.updateTag(currentTag, name, isActive, trainings);
+        return { ... tag };
+    
     }
 
     async deleteTag(tagId: number): Promise<string> {

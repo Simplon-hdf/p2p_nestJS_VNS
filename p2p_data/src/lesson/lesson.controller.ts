@@ -11,9 +11,14 @@ export class LessonController {
         return this.lessonService.getAllLessons();
     }
 
-    @Get(':id')
+    @Get('id/:id')
     getLessonById(@Param('id') lessonId : number) {
         return this.lessonService.getLessonById(lessonId);
+    }
+
+    @Get('search')
+    searchByName(@Body('title') searchedTitle: string) {
+        return this.lessonService.searchByName(searchedTitle);
     }
 
     @Post()

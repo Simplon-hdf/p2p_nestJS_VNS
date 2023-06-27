@@ -23,6 +23,11 @@ export class LessonService {
         }
     }
 
+    async searchByName(searchedName: string) : Promise<Lesson[]> {
+        const lessons = await this.lessonRepository.searchByName(searchedName);
+        return [ ... lessons ];
+    }
+    
     async createLesson(title: string, goal: string, subject: string, chaptersIds: number[]): Promise<Lesson> {
         const lesson = await this.lessonRepository.createLesson(title, goal, subject, chaptersIds);
         return { ...lesson };
