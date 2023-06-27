@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Tag } from "src/entities/tag.entity";
 import { Training } from "src/entities/training.entity";
-import { DataSource, ILike, Like, Repository } from "typeorm"
+import { DataSource, ILike } from "typeorm"
 
 // Creation of a custom repository.
 @Injectable()
@@ -22,13 +22,7 @@ export class TrainingRepository{
     }
 
     async searchByName(searchedName: string){
-        /* One way to search: not protected from SQL injection */
-        // return await this.trainingRepository
-        //     .createQueryBuilder("training")
-        //     .where("training.title like :search", {search: `%${searchedName}%`})
-        //     .getMany()
-        
-        /* Another way to search, protected from SQL Injection */
+        /* protected from SQL Injection */
         return await this.trainingRepository.findBy({
             title: ILike(`%${searchedName}%`) //ILike : case insensitive  
         });

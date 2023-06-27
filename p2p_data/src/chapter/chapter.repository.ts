@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Chapter } from "src/entities/chapter.entity";
-import { DataSource } from "typeorm";
+import { DataSource, ILike } from "typeorm";
 
 // Creation of a custom repository.
 @Injectable()
@@ -20,6 +20,13 @@ export class ChapterRepository {
 
   getAllChapters(){
     return this.chapterRepository.find();
+  }
+
+  async searchByName(searchedName: string){
+    /* protected from SQL Injection */
+    return await this.chapterRepository.findBy({
+        title: ILike(`%${searchedName}%`) //ILike : case insensitive
+      });
   }
 
   createChapter(title: string, description: string, duration: number){
