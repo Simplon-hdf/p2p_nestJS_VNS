@@ -32,9 +32,10 @@ export class ChapterController {
     async createChapter(
         @Body('title') title: string,
         @Body('description') description: string,
-        @Body('duration') duration: number
+        @Body('duration') duration: number,
+        @Body('lessons') lessonsIds: number[]
     ) : Promise<Chapter> {
-        const generatedChapter = await this.chapterService.createChapter(title, description, duration);
+        const generatedChapter = await this.chapterService.createChapter(title, description, duration, lessonsIds);
         return generatedChapter;
     }
 
@@ -45,16 +46,19 @@ export class ChapterController {
         @Body('description') description: string,
         @Body('duration') duration: number,
         @Body('isActive') isActive: boolean,
-        @Body('trainings') trainingsId: number[]
-    ) : Promise<Chapter> {
+        @Body('trainings') trainingsId: number[],
+        @Body('lessons') lessonsIds: number[]
+        ) : Promise<Chapter> {
         const updatedChapter = await this.chapterService.updateChapter(
             chapterId, 
             title, 
             description, 
             duration, 
             isActive, 
-            trainingsId
+            trainingsId,
+            lessonsIds
         );
+
         return updatedChapter;
     }
 
