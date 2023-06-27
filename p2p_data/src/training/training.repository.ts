@@ -7,19 +7,19 @@ import { DataSource, ILike } from "typeorm"
 // Creation of a custom repository.
 @Injectable()
 export class TrainingRepository{
-    constructor(private dataSource: DataSource){}
+    constructor(private dataSource: DataSource) { }
 
     trainingRepository = this.dataSource.getRepository(Training);
 
     //#region Get Methods
-    getTrainingByID(trainingId: number){
+    getTrainingByID(trainingId: number) {
         return this.trainingRepository.findOne({
             where: {id: trainingId},
             relations: {tag: true, chapters:true}
         });
     }
     
-    getAllTrainings(){
+    getAllTrainings() {
         return this.trainingRepository.find({relations: {tag: true, chapters:true}});
     }
 
@@ -45,14 +45,14 @@ export class TrainingRepository{
     }
     //#endregion
 
-    async searchByName(searchedName: string){
+    async searchByName(searchedName: string) {
         /* protected from SQL Injection */
         return await this.trainingRepository.findBy({
             title: ILike(`%${searchedName}%`) //ILike : case insensitive  
         });
     }
 
-    createTraining(title: string){
+    createTraining(title: string) {
         const training = this.trainingRepository
         .create({title});
         return this.trainingRepository.save(training);
@@ -72,7 +72,7 @@ export class TrainingRepository{
         return this.trainingRepository.save(trainingToUpdate);
     }
     
-    deleteTraining(trainingId: number){
+    deleteTraining(trainingId: number) {
         this.trainingRepository.delete(trainingId);
     }
 }

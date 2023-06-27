@@ -50,7 +50,13 @@ export class TrainingService {
         return { ... training } ; // Unpack elements and create a new object to avoid sending references.
     }
     
-    async updateTraining(trainingId: number, title: string, isActive: boolean, tagId: number, chaptersId: number[]): Promise<Training> {
+    async updateTraining(
+        trainingId: number, 
+        title: string, 
+        isActive: boolean, 
+        tagId: number, 
+        chaptersId: number[]
+    ): Promise<Training> {
         const previousTraining = await this.getTrainingById(trainingId);
         
         var tag: Tag;
@@ -58,7 +64,7 @@ export class TrainingService {
             tag = await this.tagRepository.getTagByID(tagId);
         
         var chapters = new Array();
-        if(chaptersId.length > 0) {
+        if(chaptersId && chaptersId.length > 0) {
             for(var chapterId of chaptersId) {
                 var chapter = await this.chapterRepository.getChapterByID(chapterId);
                 if (chapter) chapters.push(chapter);

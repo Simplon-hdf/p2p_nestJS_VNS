@@ -8,7 +8,7 @@ export class ChapterController {
 
     //#region Get Methods
     @Get()
-    getAllChapters(){
+    getAllChapters() {
         return this.chapterService.getAllChapters();
     }
 

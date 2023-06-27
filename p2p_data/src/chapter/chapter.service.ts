@@ -14,6 +14,7 @@ export class ChapterService {
         private readonly trainingRepository: TrainingRepository,
     ) {}
     
+    //#region Get Methods
     async getAllChapters(): Promise<Chapter[]> {
         const chapters = await this.chapterRepository.getAllChapters();
         return [ ... chapters ]; //Unpack chapters to not send a reference (to avoid modifying the original array)
@@ -27,6 +28,12 @@ export class ChapterService {
         return { ... chapter };
     }
 
+    async getChapterLinkedTrainings(chapterId: number) {
+        const chapter = await this.getChapterById(chapterId);
+        return [... await this.chapterRepository.getChapterLinkedTrainings(chapter)];
+    } 
+    //#endregion
+
     async searchByName(searchedName: string) : Promise<Chapter[]> {
       const chapters = await this.chapterRepository.searchByName(searchedName);
       return [ ... chapters ];
@@ -36,11 +43,6 @@ export class ChapterService {
         const chapter = await this.chapterRepository.createChapter(title, description, duration, lessonsIds);
         return { ... chapter }; // Unpack elements and create a new object to avoid sending references.
     }
-
-    async getChapterLinkedTrainings(chapterId: number) {
-        const chapter = await this.getChapterById(chapterId);
-        return [... await this.chapterRepository.getChapterLinkedTrainings(chapter)];
-    } 
 
     async updateChapter(
         chapterId: number, 
@@ -54,21 +56,21 @@ export class ChapterService {
         const chapterToUpdate = await this.chapterRepository.getChapterByID(chapterId);
       
         var trainings: Training[] = [];
-        if(trainingsId.length > 0){
-          for(var trainingID of trainingsId){
-            var training = await this.trainingRepository.getTrainingByID(trainingID);
-            if(training) trainings.push(training);
-          }
+        if(trainingsId && trainingsId.length > 0){
+            for(var trainingID of trainingsId){
+              var training = await this.trainingRepository.getTrainingByID(trainingID);
+              if(training) trainings.push(training);
+            }
         }
 
         const chapter = await this.chapterRepository.updateChapter(
-          chapterToUpdate, 
-          title, 
-          description, 
-          duration, 
-          isActive, 
-          trainings,
-          lessonsIds
+            chapterToUpdate, 
+            title, 
+            description, 
+            duration, 
+            isActive, 
+            trainings,
+            lessonsIds
         );
         return { ... chapter };
       
