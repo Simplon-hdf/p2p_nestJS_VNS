@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { Chapter } from "src/entities/chapter.entity";
+import { Lesson } from "src/entities/lesson.entity";
 import { DataSource } from "typeorm";
 
 // Creation of a custom repository.
@@ -8,6 +9,8 @@ export class ChapterRepository {
   constructor(private dataSource: DataSource){}
 
   chapterRepository = this.dataSource.getRepository(Chapter);
+  lessonRepository = this.dataSource.getRepository(Lesson);
+
 
   getChapterByID(chapterId: number){
     return this.chapterRepository.findOneBy({
@@ -19,7 +22,7 @@ export class ChapterRepository {
   }
 
   getAllChapters(){
-    return this.chapterRepository.find();
+    return this.chapterRepository.find({ relations: { lessons: true } });
   }
 
   createChapter(title: string, description: string, duration: number){

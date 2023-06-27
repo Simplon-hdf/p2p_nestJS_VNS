@@ -25,9 +25,31 @@ export class Chapter {
     @JoinTable({ name : "chapter_tag"})
     tags: Tag[];
 
-    @ManyToMany(() => Lesson)
-    @JoinTable({ name : "chapter_lesson"})
-    lessons: Lesson[];
+
+    // @ManyToMany(() => Lesson)
+    // @JoinTable({ name : "chapter_lesson"})
+    // lessons: Lesson[];
+
+    // @ManyToMany(() => Lesson)
+    // @JoinTable({
+    //     name: 'lesson_chapter',
+    //     joinColumn: {
+    //       name: 'LessonId',
+    //       referencedColumnName: 'id',
+    //     },
+    //     inverseJoinColumn: {
+    //       name: 'chapterId',
+    //       referencedColumnName: 'id',
+    //     },
+    //   })
+    // lessons?: Lesson[];
+
+    @ManyToMany(() => Lesson, (lesson) => lesson.id)
+    @JoinTable()
+    lessons: Lesson[]
+
+    
+
 
     //One chapter has one creator. One creator can create many chapters.
     @ManyToOne(() => Person, (creator) => creator.chapters)

@@ -20,9 +20,10 @@ export class LessonController {
     async createLesson(
         @Body('title') title: string,
         @Body('goal') goal: string,
-        @Body('subject') subject: string
+        @Body('subject') subject: string,
+        @Body('chapters') chaptersIds: number[]
         ) : Promise<Lesson> {
-        return this.lessonService.createLesson(title, goal, subject);
+        return this.lessonService.createLesson(title, goal, subject, chaptersIds);
     }
 
     @Put(':id')
