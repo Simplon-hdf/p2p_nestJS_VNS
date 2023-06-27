@@ -27,6 +27,11 @@ export class TrainingService {
             throw new NotFoundException('Training not found');
         }
     }
+
+    async searchByName(searchedName: string) : Promise<Training[]> {
+        const trainings = await this.trainingRepository.searchByName(searchedName);
+        return [ ... trainings ];
+    }
     
     async createTraining(title: string): Promise<Training> {
         const training = await this.trainingRepository.createTraining(title);
