@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToMa
 import { Tag } from "./tag.entity";
 import { Lesson } from "./lesson.entity";
 import { Person } from "./person.entity";
+import { Training } from "./training.entity";
 
 @Entity()
 export class Chapter {
@@ -31,5 +32,8 @@ export class Chapter {
 
     //One chapter has one creator. One creator can create many chapters.
     @ManyToOne(() => Person, (creator) => creator.chapters)
-    creator: Person
+    creator: Person;
+
+    @ManyToMany(()=> Training, (training) => training.chapters)
+    trainings: Training[];
 }

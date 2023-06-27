@@ -21,6 +21,14 @@ export class TrainingRepository{
         return this.trainingRepository.find({relations: {tag: true}});
     }
 
+    /** Get all the chapters linked to a given training. */
+    async getTrainingChapters(){
+        return await this.trainingRepository
+            .createQueryBuilder("training")
+            .leftJoinAndSelect("training.chapters", "chapter")
+            .getMany();
+    }
+
     async searchByName(searchedName: string){
         /* protected from SQL Injection */
         return await this.trainingRepository.findBy({

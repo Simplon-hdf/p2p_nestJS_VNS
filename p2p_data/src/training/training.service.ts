@@ -14,6 +14,7 @@ export class TrainingService {
         private readonly tagRepository: TagRepository,
       ) {}
 
+    //#region Get methods 
     async getAllTrainings(): Promise<Training[]> {
         const trainings = await this.trainingRepository.getAllTrainings();
         return [ ... trainings ];
@@ -27,6 +28,12 @@ export class TrainingService {
             throw new NotFoundException('Training not found');
         }
     }
+
+    async getTrainingChapters(){
+        
+    }
+
+    //#endregion
 
     async searchByName(searchedName: string) : Promise<Training[]> {
         const trainings = await this.trainingRepository.searchByName(searchedName);
