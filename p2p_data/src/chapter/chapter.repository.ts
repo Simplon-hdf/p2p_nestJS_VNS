@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Chapter } from "src/entities/chapter.entity";
+import { Training } from "src/entities/training.entity";
 import { DataSource, ILike } from "typeorm";
 import { Lesson } from "src/entities/lesson.entity";
 
@@ -11,20 +12,38 @@ export class ChapterRepository {
   chapterRepository = this.dataSource.getRepository(Chapter);
   lessonRepository = this.dataSource.getRepository(Lesson);
 
-
+  //#region Get Methods
   getChapterByID(chapterId: number) {
     return this.chapterRepository.findOne({
-      where: { id: chapterId },
-            relations: ['lessons']
-    });
-    // .createQueryBuilder("chapter")
-    // .where("chapter.id = :id", {chapterId})
-    // .getOne()
+        where: { id: chapterId },
+        relations: { trainings:true, lessons: true }
+      });
   }
 
   getAllChapters() {
-    return this.chapterRepository.find({ relations: { lessons: true } });
+    return this.chapterRepository.find({ relations: { trainings:true, lessons: true } });
   }
+
+  /** Get all the trainings linked to a given chapter. */
+  async getChapterLinkedTrainings(chapter: Chapter) : Promise<Training[]> {
+    const result = await this.chapterRepository
+        .createQueryBuilder("chapter")
+        .leftJoinAndSelect("chapter.trainings", "training")
+        .where("chapter.id = :id", {id: chapter.id})
+        .getMany();
+
+    var trainings: Training[] = [];
+    for (var chapterElt of result) { 
+        if (chapterElt.trainings.length > 0 ) {
+            for(var training of chapterElt.trainings){
+                trainings.push(training);
+            }
+        }
+    }
+
+    return trainings;
+  }
+  //#endregion
 
   async searchByName(searchedName: string) {
     /* protected from SQL Injection */
@@ -44,19 +63,22 @@ export class ChapterRepository {
 
     const chapter = this.chapterRepository.create({ title, description, duration, lessons });
     return this.chapterRepository.save(chapter);
-
-    // const chapter = this.chapterRepository
-    //   .create({title, description, duration});
-    //   return this.chapterRepository.save(chapter);
   }
 
-
-  async updateChapter(chapterId: number, title: string, description: string, duration: number, isActive: boolean, lessonsIds: number[]): Promise<Chapter> {
-    const chapter = await this.chapterRepository.findOneBy({ id: chapterId });
-    chapter.title = title;
-    chapter.description = description;
-    chapter.duration = duration;
-    chapter.isActive = isActive;
+  async updateChapter(
+    chapterToUpdate: Chapter,
+    title: string,
+    description: string,
+    duration: number,
+    isActive: boolean,
+    trainings: Training[],
+    lessonsIds: number[]
+  ): Promise<Chapter> {
+    chapterToUpdate.title = title;
+    chapterToUpdate.description = description;
+    chapterToUpdate.duration = duration;
+    chapterToUpdate.isActive = isActive;
+    chapterToUpdate.trainings = trainings;
 
     let lessons = new Array();
     if (lessonsIds.length > 0) {
@@ -65,12 +87,9 @@ export class ChapterRepository {
         if (lesson) lessons.push(lesson);
       }
     }
+    chapterToUpdate.lessons = lessons;
 
-    chapter.lessons = lessons;
-    return this.chapterRepository.save(chapter);
-
-
-    // return this.chapterRepository.save(chapter);
+    return this.chapterRepository.save(chapterToUpdate);
   }
 
   deleteChapter(chapterId: number) {

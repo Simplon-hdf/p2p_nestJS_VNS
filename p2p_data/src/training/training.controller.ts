@@ -6,6 +6,7 @@ import { Training } from 'src/entities/training.entity';
 export class TrainingController {
     constructor(private readonly trainingService: TrainingService) {}
 
+    //#region Get Methods
     @Get()
     getAllTrainings(){
         return this.trainingService.getAllTrainings();
@@ -16,10 +17,16 @@ export class TrainingController {
         return this.trainingService.getTrainingById(trainingId);
     }
 
+    @Get('chapters/:id')
+    getTrainingLinkedChapters(@Param('id') trainingId : number) {
+        return this.trainingService.getTrainingLinkedChapters(trainingId);
+    }
+
     @Get('search')
     searchByName(@Body('title') searchedTitle: string) {
         return this.trainingService.searchByName(searchedTitle);
     }
+    //#endregion
     
     @Post()
     async createTraining(@Body('title') title: string) : Promise<Training> {
@@ -31,9 +38,10 @@ export class TrainingController {
         @Param('id') trainingID: number,
         @Body('title') title: string,
         @Body('isActive') isActive: boolean,
-        @Body('tag') tagId: number
+        @Body('tag') tagId: number,
+        @Body('chapters') chaptersId: number[]
     ) : Promise<Training> {
-        return this.trainingService.updateTraining(trainingID, title, isActive, tagId);
+        return this.trainingService.updateTraining(trainingID, title, isActive, tagId, chaptersId);
     }
 
     @Delete(':id')
