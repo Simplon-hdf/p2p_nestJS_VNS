@@ -3,6 +3,7 @@ import { TrainingRepository } from './training.repository';
 import { Training } from 'src/entities/training.entity';
 import { TagRepository } from 'src/tag/tag.repository';
 import { Tag } from 'src/entities/tag.entity';
+import { ChapterRepository } from 'src/chapter/chapter.repository';
 
 @Injectable()
 export class TrainingService {
@@ -12,6 +13,9 @@ export class TrainingService {
 
         @Inject(TagRepository)
         private readonly tagRepository: TagRepository,
+
+        @Inject(ChapterRepository)
+        private readonly chapterRepository: ChapterRepository,
       ) {}
 
     //#region Get methods 
@@ -29,8 +33,9 @@ export class TrainingService {
         }
     }
 
-    async getTrainingChapters(){
-        
+    async getTrainingChapters(trainingId: number) {
+        const training = await this.getTrainingById(trainingId);
+        return [... await this.trainingRepository.getTrainingChapters(training)];
     }
 
     //#endregion
@@ -45,13 +50,22 @@ export class TrainingService {
         return { ... training } ; // Unpack elements and create a new object to avoid sending references.
     }
     
-    async updateTraining(trainingId: number, title: string, isActive: boolean, tagId: number): Promise<Training> {
+    async updateTraining(trainingId: number, title: string, isActive: boolean, tagId: number, chaptersId: number[]): Promise<Training> {
         const previousTraining = await this.getTrainingById(trainingId);
+        
         var tag: Tag;
         if(tagId != undefined) 
             tag = await this.tagRepository.getTagByID(tagId);
         
-        return { ... await this.trainingRepository.updateTraining(previousTraining, title, isActive, tag) };
+        var chapters = new Array();
+        if(chaptersId.length > 0) {
+            for(var chapterId of chaptersId) {
+                var chapter = await this.chapterRepository.getChapterByID(chapterId);
+                if (chapter) chapters.push(chapter);
+            }  
+        }
+        
+        return { ... await this.trainingRepository.updateTraining(previousTraining, title, isActive, tag, chapters) };
     }
     
     async deleteTraining(trainingId: number): Promise<string> {
