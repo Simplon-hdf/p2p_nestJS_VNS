@@ -48,12 +48,26 @@ There are also trainers that need to create trainings, chapters and lessons. All
 - **Permissions** : They help to organize who's allowed to do what. For example, students can't create lessons.
 
 ## **3. Technologies**
+The choice of the technologies was mainly up to us. However, we were given a few recommendations. 
+<br> 
+In the end, we decided to use PostgreSQl, typeORM and NestJS. What lead us to choose them was... curiosity! But also because they really are efficients, well-documented and used by a lot of peoples.
 
 ### **PostgreSQL**
+Postgre is an open-source **relational database management system**. Its advantages are a huge data consistency and integrity.
+
+Most of us were using MySQL for our previous projects but PostgreSQL has gotten an incredible increase of popularity. So why not learning it. 
 
 ### **TypeORM**
+TypeORM is an **object-relational-mapping** (ORM). It is used as an intermediate between an application with an object oriented programming langage and a database. <br> 
+<!-- We can see it as the one that receives the desires of the user throught the application and convert it in a request to check into the database, get the desired informations or apply modifications and convert it back to be used. -->
+
+Why using it ? High popularity, easy to use with NestJS, really scalable to work with many different sizes of applications. 
+<br> It's not difficult to create database tables and update them since it's automatic with TypeORM. Perfect for our small project.
 
 ### **NestJS**
+NestJS is a **framework** used to build server side web applications. It uses TypeScript and has the advantage of being able to create scalable applications.
+
+NestJS allows rapid development, predictable and readable code thanks to its atomicity. In that project, we use the NestJS functionalities in pair with TypeORM on a model-view-controller project. We really find it clear and efficient, notably with the decorators that make the treatment of the routes so organised and clean.
 
 ## **4. Project status**
 
