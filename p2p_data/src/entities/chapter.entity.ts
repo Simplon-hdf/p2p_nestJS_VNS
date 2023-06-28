@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToMa
 import { Tag } from "./tag.entity";
 import { Lesson } from "./lesson.entity";
 import { Person } from "./person.entity";
+import { Training } from "./training.entity";
 
 @Entity()
 export class Chapter {
@@ -9,27 +10,30 @@ export class Chapter {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length : 100 })
+    @Column({ length: 100 })
     title: string;
- 
+
     @Column()
     description: string;
 
     @Column()
     duration: number;
 
-    @Column({default : true})
-    isActive : boolean;
+    @Column({ default: true })
+    isActive: boolean;
 
     @ManyToMany(() => Tag)
-    @JoinTable({ name : "chapter_tag"})
+    @JoinTable({ name: "chapter_tag" })
     tags: Tag[];
 
-    @ManyToMany(() => Lesson)
-    @JoinTable({ name : "chapter_lesson"})
-    lessons: Lesson[];
+    @ManyToMany(() => Lesson, (lesson) => lesson.chapters)
+    @JoinTable({ name: "chapter_lesson" })
+    lessons: Lesson[]
 
     //One chapter has one creator. One creator can create many chapters.
     @ManyToOne(() => Person, (creator) => creator.chapters)
-    creator: Person
+    creator: Person;
+
+    @ManyToMany(()=> Training, (training) => training.chapters)
+    trainings: Training[];
 }

@@ -30,19 +30,26 @@ export class PersonTrainingService {
     }
 
     // Create one if didn't exist
-    async createPersonTraining(isAuthor: boolean, isActive: boolean): Promise<PersonTraining> {
-        const newPersonTraining = await this.personTrainingRepository.CreatePersonTraining(isAuthor, isActive);
-            return { ...newPersonTraining }
+    async createPersonTraining(
+        isAuthor: boolean,
+        isActive: boolean,
+        personId : number,
+        trainingId: number
+    ): Promise<PersonTraining> {
+
+        const newPersonTraining = await this.personTrainingRepository.CreatePersonTraining(isAuthor, isActive, personId, trainingId);
+        return { ...newPersonTraining }
+        
     }
 
     // Update one 
-    async updatePersonTraining(idPersonTraining : number, isAuthor: boolean, isActive: boolean ): Promise<PersonTraining> {
+    async updatePersonTraining(idPersonTraining : number, isAuthor: boolean, isActive: boolean, person: number, training: number ): Promise<PersonTraining> {
         const personTrainingInBdd = await this.personTrainingRepository.GetPersonTrainingById(idPersonTraining);
         if (!personTrainingInBdd) {
             throw new NotFoundException('Update Error : personTraining not found !');
         }
         else {
-            const personTrainingUpdated = await this.personTrainingRepository.updatePersonTraining(idPersonTraining, isAuthor, isActive);
+            const personTrainingUpdated = await this.personTrainingRepository.updatePersonTraining(idPersonTraining, isAuthor, isActive, person, training);
             return personTrainingUpdated;
         }
     }

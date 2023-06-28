@@ -6,23 +6,36 @@ import { Chapter } from 'src/entities/chapter.entity';
 export class ChapterController {
     constructor(private readonly chapterService: ChapterService) {}
 
+    //#region Get Methods
     @Get()
-    getAllChapters(){
+    getAllChapters() {
         return this.chapterService.getAllChapters();
     }
 
-    @Get(':id')
+    @Get('id/:id')
     getChapterById(@Param('id') chapterId : number) {
         return this.chapterService.getChapterById(chapterId);
     }
+
+    @Get('trainings/:id')
+    getChapterLinkedTrainings(@Param('id') chapterId : number) {
+        return this.chapterService.getChapterLinkedTrainings(chapterId);
+    }
+
+    @Get('search')
+    searchByName(@Body('title') searchedTitle: string) {
+        return this.chapterService.searchByName(searchedTitle);
+    }
+    //#endregion
 
     @Post()
     async createChapter(
         @Body('title') title: string,
         @Body('description') description: string,
-        @Body('duration') duration: number
+        @Body('duration') duration: number,
+        @Body('lessons') lessonsIds: number[]
     ) : Promise<Chapter> {
-        const generatedChapter = await this.chapterService.createChapter(title, description, duration);
+        const generatedChapter = await this.chapterService.createChapter(title, description, duration, lessonsIds);
         return generatedChapter;
     }
 
@@ -33,8 +46,19 @@ export class ChapterController {
         @Body('description') description: string,
         @Body('duration') duration: number,
         @Body('isActive') isActive: boolean,
-    ) : Promise<Chapter> {
-        const updatedChapter = await this.chapterService.updateChapter(chapterId, title, description, duration, isActive);
+        @Body('trainings') trainingsId: number[],
+        @Body('lessons') lessonsIds: number[]
+        ) : Promise<Chapter> {
+        const updatedChapter = await this.chapterService.updateChapter(
+            chapterId, 
+            title, 
+            description, 
+            duration, 
+            isActive, 
+            trainingsId,
+            lessonsIds
+        );
+
         return updatedChapter;
     }
 
