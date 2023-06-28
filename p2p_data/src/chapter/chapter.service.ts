@@ -14,18 +14,19 @@ export class ChapterService {
         private readonly trainingRepository: TrainingRepository,
     ) {}
     
-    //#region Get All Chapters
+    //#region GET
+
     /**
+     * Get All Chapters
      * @returns a LIST of unpacked Chapters who comes from Repository
      */
     async getAllChapters(): Promise<Chapter[]> {
         const chapters = await this.chapterRepository.getAllChapters();
         return [ ... chapters ]; //Unpack chapters to not send a reference (to avoid modifying the original array)
     }
-    //#endregion
-
-    //#region Get ONE Chapter by ID
+ 
     /**
+     * Get ONE Chapter by ID
      * @param chapterId (Chapter's Id who comes from Controller)
      * @returns one unpacked Chapter who comes from Repository
      */
@@ -36,10 +37,9 @@ export class ChapterService {
         }
         return { ... chapter };
     }
-    //#endregion
 
-    //#region Get Trainings for one Chapter
     /**
+     * Get Trainings for one Chapter
      * @param chapterId (Chapter's Id who comes from controller)
      * @returns a LIST of Trainings who comes from Repository
      */
@@ -47,10 +47,9 @@ export class ChapterService {
         const chapter = await this.getChapterById(chapterId);
         return [... await this.chapterRepository.getLinkedTrainings(chapter)];
     } 
-    //#endregion
 
-    //#region Get Chapter by name
     /**
+     * Get Chapter by name
      * @param searchedName (the piece of string who comes from Controller)
      * @returns a LIST of unpacked Chapters who comes from Repository
      */
@@ -59,9 +58,9 @@ export class ChapterService {
       return [ ... chapters ];
     }
     //#endregion
-
-    //#region Post a NEW Chapter
+ 
     /**
+     * Post a NEW Chapter
      * @param title (the title who comes from Controller)
      * @param description (the description who comes from Controller)
      * @param duration (the duration who comes from Controller)
@@ -78,10 +77,9 @@ export class ChapterService {
             const chapter = await this.chapterRepository.createChapter(title, description, duration, lessonsIds);
         return { ... chapter }; // Unpack elements and create a new object to avoid sending references.
     }
-    //#endregion
 
-    //#region Update a chapter by Id
     /**
+     * Update a chapter by Id
      * @param chapterId (the Id chapter who comes from the Controller)
      * @param title (the title who comes from the Controller)
      * @param description (the description who comes from the Controller)
@@ -121,10 +119,9 @@ export class ChapterService {
         );
         return { ... chapter };
     }
-    //#endregion
 
-    //#region Delete one Chapter By Id
     /**
+     * Delete one Chapter By Id
      * @param chapterId (the chapter's Id who comes from the Controller)
      * @returns a STRING who comes from Repository
      */
@@ -134,5 +131,5 @@ export class ChapterService {
         return "Chapter deleted";
       }
     }
-    //#endregion
+
 }

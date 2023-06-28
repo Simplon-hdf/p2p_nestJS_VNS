@@ -12,17 +12,18 @@ export class ChapterRepository {
     chapterRepository = this.dataSource.getRepository(Chapter);
     lessonRepository = this.dataSource.getRepository(Lesson);
 
-    //#region Get All Chapters
+    //#region GET
+
     /**
+     * Get All Chapters
      * @returns a LIST of Chapters who comes from DataBase (with their relations)
      */
     getAllChapters() {
         return this.chapterRepository.find({ relations: { trainings: true, lessons: true } });
     }
-    //#endregion
 
-    //#region Get ONE Chapter by ID
     /**
+     * Get ONE Chapter by ID
      * @param chapterId (Chapter's Id who comes from Service)
      * @returns one Chapter result who comes from DataBase (with his relations)
      */
@@ -32,10 +33,9 @@ export class ChapterRepository {
             relations: { trainings: true, lessons: true }
         });
     }
-    //#endregion
 
-    //#region Get Trainings for one Chapter
     /**
+     * Get Trainings for one Chapter
      * @param chapter (Chapter's Id who comes from Service)
      * @returns a LIST of Trainings who comes from DataBase
      */
@@ -57,10 +57,9 @@ export class ChapterRepository {
 
         return trainings;
     }
-    //#endregion
-
-    //#region Get Chapter by name
+ 
     /**
+     * Get Chapter by name
      * @param searchedName (the piece of string who comes from Service)
      * @returns a LIST of Chapters who contain the gived name and who comes from DataBase
      */
@@ -72,8 +71,8 @@ export class ChapterRepository {
     }
     //#endregion
 
-    //#region Post a NEW Chapter
     /**
+     * Post a NEW Chapter
      * @param title (the title who comes from Service)
      * @param description (the description who comes from Service)
      * @param duration (the duration who comes from Service)
@@ -92,10 +91,9 @@ export class ChapterRepository {
         const chapter = this.chapterRepository.create({ title, description, duration, lessons });
         return this.chapterRepository.save(chapter);
     }
-    //#endregion
 
-    //#region Update a chapter by Id
     /**
+     * Update a chapter by Id
      * @param chapterId (the Id chapter who comes from Service)
      * @param title (the title who comes from Service)
      * @param description (the description who comes from Service)
@@ -131,14 +129,13 @@ export class ChapterRepository {
 
         return this.chapterRepository.save(chapterToUpdate);
     }
-    //#endregion
 
-    //#region Delete one Chapter by Id
     /**
+     * Delete one Chapter by Id
      * @param chapterId (the chapter's Id who comes from Service)
      */
     deleteChapter(chapterId: number) {
         this.chapterRepository.delete(chapterId);
     }
-    //#endregion
+
 }

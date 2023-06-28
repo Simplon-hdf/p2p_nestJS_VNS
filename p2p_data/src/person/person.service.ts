@@ -13,8 +13,10 @@ export class PersonService {
         private readonly roleRepository: RoleRepository,
     ) { }
 
-    //#region Get All Persons
+    //#region GET
+
     /**
+     * Get All Persons
      * @returns a LIST of unpacked Persons who comes from Repository
      */
     async GetAllPersons(): Promise<Person[]> {
@@ -24,10 +26,9 @@ export class PersonService {
         }
         return [...persons];
     }
-    //#endregion
 
-    //#region  Get ONE by ID
     /**
+     * Get ONE by ID
      * @param personId (Person's Id who comes from Controller)
      * @returns one unpacked Person who comes from Repository
      */
@@ -38,10 +39,9 @@ export class PersonService {
         }
         return { ...person };
     }
-    //#endregion
 
-    //#region Get ONE by EMAIL
     /**
+     * Get ONE by EMAIL
      * @param email (Person's Email who comes from Controller)
      * @returns one unpacked Person who comes from Repository
      */
@@ -54,8 +54,8 @@ export class PersonService {
     }
     //#endregion
 
-    //#region Post a NEW Person
     /**
+     * Post a NEW Person
      * @param lastName (the lastName who comes from Controller)
      * @param firstName (the firstName who comes from Controller)
      * @param email (the email who comes from Controller)
@@ -87,10 +87,10 @@ export class PersonService {
             return { ...newPerson }
         }
     }
-    //#endregion
 
-    //#region Update a Person by Id
+    //#region UPDATE
     /**
+     * Update a Person by Id
      * @param personId (the person's Id who comes from Controller)
      * @param lastName (the lastName who comes from Controller)
      * @param firstName (the firstName who comes from Controller)
@@ -125,10 +125,26 @@ export class PersonService {
             return personUpdated;
         }
     }
+
+    /**
+     * Soft Delete (isActive Update) by Id
+     * @param personId (Person's Id who comes from Controller)
+     * @returns the Person who was disabled and who comes from Repository
+     */
+        async disabledPerson(personId: number): Promise<Person> {
+            const personInBdd = await this.personRepository.GetPersonById(personId);
+            if (!personInBdd) {
+                throw new NotFoundException('Person to update not found');
+            }
+            else {
+                const personUpdated = await this.personRepository.disabledPerson(personId);
+                return personUpdated;
+            }
+        }
     //#endregion
 
-    //#region Delete one Person by Id
     /**
+     * Delete one Person by Id
      * @param personId  (the person's Id who comes from Controller)
      * @returns the person who was disabled and who comes from Repository
      */
@@ -136,23 +152,5 @@ export class PersonService {
         const deletedPerson = await this.personRepository.deletePerson(personId);
         return deletedPerson
     }
-    //#endregion
-
-    //#region  Soft Delete (isActive Update) by Id
-    /**
-     * @param personId (Person's Id who comes from Controller)
-     * @returns the Person who was disabled and who comes from Repository
-     */
-    async disabledPerson(personId: number): Promise<Person> {
-        const personInBdd = await this.personRepository.GetPersonById(personId);
-        if (!personInBdd) {
-            throw new NotFoundException('Person to update not found');
-        }
-        else {
-            const personUpdated = await this.personRepository.disabledPerson(personId);
-            return personUpdated;
-        }
-    }
-    //#endregion
 
 }
