@@ -6,18 +6,19 @@ import { Chapter } from 'src/entities/chapter.entity';
 export class ChapterController {
     constructor(private readonly chapterService: ChapterService) {}
 
-    //#region Get ALL Chapters
+    //#region GET
+
     /**
+     * Get ALL Chapters
      * @returns a LIST off Chapters OBJECTS whom comes from Service
      */
     @Get()
     getAllChapters() {
         return this.chapterService.getAllChapters();
     }
-    //#endregion
 
-    //#region Get ONE Chapter by ID
     /**
+     * Get ONE Chapter by ID
      * @param chapterId (Chapter's Id to search who comes from URL)
      * @returns one Chapter OBJECT who comes from Service
      */
@@ -25,10 +26,9 @@ export class ChapterController {
     getChapterById(@Param('id') chapterId : number) {
         return this.chapterService.getChapterById(chapterId);
     }
-    //#endregion
 
-    //#region Get Trainings for one Chapter
     /**
+     * Get Trainings for one Chapter
      * @param chapterId (Chapter's Id who comes from Service and for find his trainings)
      * @returns a LIST of trainings OBJECTS who comes from Service
      */
@@ -36,10 +36,9 @@ export class ChapterController {
     getLinkedTrainings(@Param('id') chapterId : number) {
         return this.chapterService.getLinkedTrainings(chapterId);
     }
-    //#endregion
 
-    //#region Get Chapter by name
     /**
+     * Get Chapter by name
      * @param searchedTitle (the piece of string to find who comes from the Body request)
      * @returns a LIST of Chapters who comes from Service
      */
@@ -49,8 +48,8 @@ export class ChapterController {
     }
     //#endregion
 
-    //#region Post a NEW Chapter
     /**
+     * Post a NEW Chapter
      * @param title (the title who comes from the request body)
      * @param description (the description who comes from the request body)
      * @param duration (the duration who comes from the request body)
@@ -68,10 +67,9 @@ export class ChapterController {
         const generatedChapter = await this.chapterService.createChapter(title, description, duration, lessonsIds);
         return generatedChapter;
     }
-    //#endregion
 
-    //#region Update a chapter by Id
     /**
+     * Update a chapter by Id
      * @param chapterId (the Id chapter who comes from the URL)
      * @param title (the title who comes from the request body)
      * @param description (the description who comes from the request body)
@@ -104,10 +102,9 @@ export class ChapterController {
 
         return updatedChapter;
     }
-    //#endregion
 
-    //#region Delete one Chapter By Id
     /**
+     * Delete one Chapter By Id
      * @param chapterId (the chapter's Id who comes from URL)
      * @returns a STRING who comes from Service
      */
@@ -115,5 +112,5 @@ export class ChapterController {
     deleteChapter(@Param('id') chapterId: number){
         return this.chapterService.deleteChapter(chapterId);
     }
-    //#endregion
+
 }

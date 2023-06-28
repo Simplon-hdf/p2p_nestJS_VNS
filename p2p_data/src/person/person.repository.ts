@@ -12,8 +12,10 @@ export class PersonRepository {
     personRepository = this.dataSource.getRepository(Person);
     roleRepository = this.dataSource.getRepository(Role);
 
-    //#region Get All Persons
+    //#region GET
+
     /**
+     * Get All Persons
      * @returns a LIST of Persons who comes from DataBase (with their relations)
      */
     async GetAllPersons(): Promise<Person[]> {
@@ -23,10 +25,9 @@ export class PersonRepository {
             return error;
         }
     }
-    //#endregion
 
-    //#region Get ONE by ID
     /**
+     * Get ONE by ID
      * @param personId (Person's Id who comes from Service)
      * @returns one Person who comes from DataBase (with his relations)
      */
@@ -40,10 +41,9 @@ export class PersonRepository {
             return error;
         }
     }
-    //#endregion
 
-    //#region Get ONE by EMAIL
     /**
+     * Get ONE by EMAIL
      * @param email (Person's Email who comes from Service)
      * @returns one Person who comes from DataBase (with his relations)
      */
@@ -59,8 +59,8 @@ export class PersonRepository {
     }
     //#endregion
 
-    //#region Post a NEW Person
     /**
+     * Post a NEW Person
      * @param lastName (the lastName who comes from Service)
      * @param firstName (the firstName who comes from Service)
      * @param email (the email who comes from Service)
@@ -92,7 +92,6 @@ export class PersonRepository {
             return error;
         }
     }
-    //#endregion
 
     //#region Update a Person by Id
     /**
@@ -135,25 +134,9 @@ export class PersonRepository {
             return error;
         }
     }
-    //#endregion
 
-    //#region Delete one Person by Id
     /**
-     * @param personId (the person's Id who comes from Service)
-     * @returns a String
-     */
-    deletePerson(personId: number) {
-        try {
-            this.personRepository.delete(personId);
-            return "Person is deleted";
-        } catch (error) {
-            return error;
-        }
-    }
-    //#endregion
-
-    //#region Soft Delete (isActive Update) by Id
-    /**
+     * Soft Delete (isActive Update) by Id
      * @param personId (the person's Id who comes from Service)
      * @returns the Person who was disabled in DataBase
      */
@@ -173,5 +156,19 @@ export class PersonRepository {
         }
     }
     //#endregion
+
+    /**
+     * Delete one Person by Id
+     * @param personId (the person's Id who comes from Service)
+     * @returns a String
+     */
+    deletePerson(personId: number) {
+        try {
+            this.personRepository.delete(personId);
+            return "Person is deleted";
+        } catch (error) {
+            return error;
+        }
+    }
 
 }
