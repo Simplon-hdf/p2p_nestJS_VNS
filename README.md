@@ -10,7 +10,7 @@
     - [TypeORM](#typeorm)
     - [NestJS](#nestjs)
 * [**Project status**](#4-project-status)
-* [**Sources**](#5-sources)
+* [**Ressources**](#5-ressources)
 
 ## **1. Description**
 
@@ -25,12 +25,12 @@ Once a student finish an online course, he can set it as done, increasing the co
 Create an API that allows to interact with a database and manage a few entities by modifying routes thanks to a controller and tools like Postman.
 
 ## **2. Detailed content**
-We had to create two different type of content :
+We had to create two different type of content:
 - Visible content that can be read by everyone (ex: chapters, lessons).
 - Managing content that organize and restrict (ex: tag, permissions).
 
 ### **Visible content**
-Currently, there is only three content that students and trainers can read :
+Currently, there is only three content that students and trainers can read:
 - **Training**: Each training contains one or more chapters and has a title and a completion gauge, increasing depending of the number of chapters completed.
 - **Chapters**: Each chapters contains one or more lessons. It also has a title, a description and a duration.
 - **Lessons**: Defined with a title, a goal (what's the objective of the lesson) and a subject (what you'll learn in that lesson).
@@ -40,7 +40,7 @@ They all have an active state that determines whether the website can show them 
 To easily search a training, a chapter or a lesson, **tags** will be added to them. The main purpose of a tag is to organize more effectively the website content and to help doing researchs (With a... research bar!)
 
 ### **Managing content**
-Do you remember that we talked about students and trainers ? Well, that means we need to create a few things :
+Do you remember that we talked about students and trainers ? Well, that means we need to create a few things:
 - **Users account** : 
 Users such as students will need to follow and check lessons or modules in order to progress and pass examinations courses (for instance).
 There are also trainers that need to create trainings, chapters and lessons. All those things require an account system.
@@ -69,6 +69,28 @@ NestJS is a **framework** used to build server side web applications. It uses Ty
 
 NestJS allows rapid development, predictable and readable code thanks to its atomicity. In that project, we use the NestJS functionalities in pair with TypeORM on a model-view-controller project. We really find it clear and efficient, notably with the decorators that make the treatment of the routes so organised and clean.
 
-## **4. Project status**
+## **4. Project status:** What's done ?
+**Database connection:**
+TypeORM can interact with the PostgreSQL database and create tables from the models defined in our entities (Where each entity is a table in the database).
 
-## **5. Sources**
+**Database relations:**
+We have managed several types of relations between the tables, such as OneToMany, ManyToOne and ManyToMany. When we update the values of one side of a relation, the other side is automatically updated (thank you TypeORM).
+
+**Interactions with the application:**
+Currently, we can interact with the application by using custom routes. <br>
+We made the basic CRUD (Create, Read, Update and Delete) operations for every entity and, by defining methods and using the NestJS decorators, we can pass parameters in a route and/or adding a body to our request by using Postman. That allows us to interact with the application and trigger methods that will return or update our database.
+<br>
+In order to reach that level of interaction, we had to create a controller, a service and a repository for every entity and write methods to receive parameters and use them to create a custom request.
+
+**Advanced interactions:** 
+Furthermore, by using a custom route, we can trigger more advanced methods. For example, we made it possible to:
+- update relations between tables
+- show and get relations (ex: get all the chapters contained in a training)
+- search a training, chapter or lesson by typing a few letters (useful for a search bar)
+- Soft delete elements : make them inactives without deleting them in the database (ex: delete user become an anonyme user)
+
+## **5. Ressources**
+- [ManyToMany relations (doc)](https://orkhan.gitbook.io/typeorm/docs/many-to-many-relations)
+- [Deprecated EntityRepository](https://stackoverflow.com/questions/71557301/how-to-workraound-this-typeorm-error-entityrepository-is-deprecated-use-repo) We choose to replace the deprecated EntityRepository by a Service-like Repository.
+- [Create entities (doc)](https://orkhan.gitbook.io/typeorm/docs/entities)
+- [ChatGPT](https://openai.com/blog/chatgpt) For answering many questions and giving precious examples
