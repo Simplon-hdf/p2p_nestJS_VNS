@@ -11,7 +11,13 @@ export class TrainingRepository{
 
     trainingRepository = this.dataSource.getRepository(Training);
 
-    //#region Get Methods
+    //#region GET
+
+    /**
+     * Get ONE Training by ID
+     * @param trainingId (Training's Id who comes from Service)
+     * @returns one Training OBJECT who comes from BDD
+     */
     getTrainingByID(trainingId: number) {
         return this.trainingRepository.findOne({
             where: {id: trainingId},
@@ -19,12 +25,20 @@ export class TrainingRepository{
         });
     }
     
+    /**
+     * Get All Trainings
+     * @returns a LIST off Trainings OBJECTS who comes from DataBase
+     */
     getAllTrainings() {
         return this.trainingRepository.find({relations: {tag: true, chapters:true}});
     }
 
-    /** Get all the chapters linked to a given training. */
-    async getTrainingLinkedChapters(training: Training) : Promise<Chapter[]> {
+    /**
+     * Get Chapters by Trainind Id
+     * @param trainingId (Training's Id who comes from Service and for find his Chapters)
+     * @returns a LIST of Chapters OBJECT who comes from DataBase
+     */
+    async getLinkedChapters(training: Training) : Promise<Chapter[]> {
         const result = await this.trainingRepository
             .createQueryBuilder("training")
             .leftJoinAndSelect("training.chapters", "chapter")
@@ -43,21 +57,40 @@ export class TrainingRepository{
 
         return chapters;
     }
-    //#endregion
 
+    /**
+     * Get Trainings by name 
+     * @param searchedTitle (the piece of string to find and who comes from Service)
+     * @returns a LIST of Trainings who comes from DataBase
+     */
     async searchByName(searchedName: string) {
         /* protected from SQL Injection */
         return await this.trainingRepository.findBy({
             title: ILike(`%${searchedName}%`) //ILike : case insensitive  
         });
     }
+    //#endregion
 
+    /**
+     * Post a NEW Training
+     * @param title (the title who comes from Service)
+     * @returns the new Training OBJECT who comes from DataBase
+     */
     createTraining(title: string) {
         const training = this.trainingRepository
         .create({title});
         return this.trainingRepository.save(training);
     }
     
+    /**
+     * Update one Training by Id
+     * @param trainingID (the training's Id who comes from Service)
+     * @param title (the title training who comes from Service)
+     * @param isActive (the isActive training who comes from Service)
+     * @param tagId (the tag's Id training who comes from Service)
+     * @param chaptersId (the chapters's Ids who comes from Service)
+     * @returns the updated Training OBJECT who comes from DataBase
+     */
     updateTraining(
         trainingToUpdate: Training, 
         title: string, 
@@ -72,6 +105,10 @@ export class TrainingRepository{
         return this.trainingRepository.save(trainingToUpdate);
     }
     
+    /**
+     * Delete one Training by Id
+     * @param trainingID (the training's Id who comes from Service)
+     */
     deleteTraining(trainingId: number) {
         this.trainingRepository.delete(trainingId);
     }
