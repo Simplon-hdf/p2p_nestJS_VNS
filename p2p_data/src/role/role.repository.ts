@@ -29,7 +29,6 @@ export class RoleRepository {
         } catch (error) {
             return error;
         }
-
     }
 
     // Search one by NAME
@@ -42,18 +41,12 @@ export class RoleRepository {
         } catch (error) {
             return error;
         }
-
     }
 
     // Create one if didn't exist
-    async CreateRole(
-        name: string,
-        isActive: boolean
-    ): Promise<Role> {
+    async CreateRole(name: string, isActive: boolean): Promise<Role> {
         try {
-            const role = await this.roleRepository.create(
-                { name, isActive }
-            );
+            const role = await this.roleRepository.create({ name, isActive });
             return this.roleRepository.save(role);
         } catch (error) {
             return error;
@@ -61,12 +54,7 @@ export class RoleRepository {
     }
 
     // Update one
-    async updateRole(
-        idRole: number,
-        name: string,
-        isActive: boolean
-    ): Promise<Role> {
-
+    async updateRole(idRole: number, name: string, isActive: boolean): Promise<Role> {
         try {
             const role = await this.roleRepository.findOneBy({ id: idRole });
             role.name = name;

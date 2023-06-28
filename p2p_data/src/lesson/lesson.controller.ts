@@ -11,18 +11,24 @@ export class LessonController {
         return this.lessonService.getAllLessons();
     }
 
-    @Get(':id')
+    @Get('id/:id')
     getLessonById(@Param('id') lessonId : number) {
         return this.lessonService.getLessonById(lessonId);
+    }
+
+    @Get('search')
+    searchByName(@Body('title') searchedTitle: string) {
+        return this.lessonService.searchByName(searchedTitle);
     }
 
     @Post()
     async createLesson(
         @Body('title') title: string,
         @Body('goal') goal: string,
-        @Body('subject') subject: string
+        @Body('subject') subject: string,
+        @Body('chapters') chaptersIds: number[]
         ) : Promise<Lesson> {
-        return this.lessonService.createLesson(title, goal, subject);
+        return this.lessonService.createLesson(title, goal, subject, chaptersIds);
     }
 
     @Put(':id')
@@ -31,9 +37,10 @@ export class LessonController {
         @Body('title') title: string,
         @Body('goal') goal: string,
         @Body('subject') subject: string,
-        @Body('isActive') isActive: boolean
+        @Body('isActive') isActive: boolean,
+        @Body('chapters') chaptersIds: number[]
     ) : Promise<Lesson> {
-        return this.lessonService.updateLesson(lessonID, title, goal, subject, isActive);
+        return this.lessonService.updateLesson(lessonID, title, goal, subject, isActive, chaptersIds);
     }
 
     @Delete(':id')
