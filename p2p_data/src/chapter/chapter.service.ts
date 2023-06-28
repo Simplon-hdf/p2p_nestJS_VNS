@@ -14,12 +14,21 @@ export class ChapterService {
         private readonly trainingRepository: TrainingRepository,
     ) {}
     
-    //#region Get Methods
+    //#region Get All Chapters
+    /**
+     * @returns a LIST of unpacked Chapters who comes from Repository
+     */
     async getAllChapters(): Promise<Chapter[]> {
         const chapters = await this.chapterRepository.getAllChapters();
         return [ ... chapters ]; //Unpack chapters to not send a reference (to avoid modifying the original array)
     }
+    //#endregion
 
+    //#region Get ONE Chapter by ID
+    /**
+     * @param chapterId (Chapter's Id who comes from Controller)
+     * @returns one unpacked Chapter who comes from Repository
+     */
     async getChapterById(chapterId: number): Promise<Chapter> {
         const chapter = await this.chapterRepository.getChapterByID(chapterId);
         if(!chapter){
@@ -27,23 +36,61 @@ export class ChapterService {
         }
         return { ... chapter };
     }
+    //#endregion
 
-    async getChapterLinkedTrainings(chapterId: number) {
+    //#region Get Trainings for one Chapter
+    /**
+     * @param chapterId (Chapter's Id who comes from controller)
+     * @returns a LIST of Trainings who comes from Repository
+     */
+    async getLinkedTrainings(chapterId: number) {
         const chapter = await this.getChapterById(chapterId);
-        return [... await this.chapterRepository.getChapterLinkedTrainings(chapter)];
+        return [... await this.chapterRepository.getLinkedTrainings(chapter)];
     } 
     //#endregion
 
+    //#region Get Chapter by name
+    /**
+     * @param searchedName (the piece of string who comes from Controller)
+     * @returns a LIST of unpacked Chapters who comes from Repository
+     */
     async searchByName(searchedName: string) : Promise<Chapter[]> {
       const chapters = await this.chapterRepository.searchByName(searchedName);
       return [ ... chapters ];
     }
+    //#endregion
 
-    async createChapter(title: string, description: string, duration: number, lessonsIds: number[]): Promise<Chapter> {
-        const chapter = await this.chapterRepository.createChapter(title, description, duration, lessonsIds);
+    //#region Post a NEW Chapter
+    /**
+     * @param title (the title who comes from Controller)
+     * @param description (the description who comes from Controller)
+     * @param duration (the duration who comes from Controller)
+     * @param lessonsIds (a list of lessons Ids who comes from Controller)
+     * @returns the unpacked Chapter who was created and who comes from Repository
+     */
+    async createChapter(
+        title: string, 
+        description: string, 
+        duration: number, 
+        lessonsIds: number[]
+        ): Promise<Chapter> {
+        
+            const chapter = await this.chapterRepository.createChapter(title, description, duration, lessonsIds);
         return { ... chapter }; // Unpack elements and create a new object to avoid sending references.
     }
+    //#endregion
 
+    //#region Update a chapter by Id
+    /**
+     * @param chapterId (the Id chapter who comes from the Controller)
+     * @param title (the title who comes from the Controller)
+     * @param description (the description who comes from the Controller)
+     * @param duration (the duration who comes from the Controller)
+     * @param isActive (the isActive who comes from the Controller)
+     * @param trainingsId (the Ids Trainings LIST who comes from the Controller)
+     * @param lessonsIds (the Ids Lessons LIST who comes from the Controller)
+     * @returns the unpacked Chapter who was created and who comes from Repository 
+     */
     async updateChapter(
         chapterId: number, 
         title: string, 
@@ -53,12 +100,12 @@ export class ChapterService {
         trainingsId: number[],
         lessonsIds: number[]
     ): Promise<Chapter> {
+
         const chapterToUpdate = await this.chapterRepository.getChapterByID(chapterId);
-      
-        var trainings: Training[] = [];
+        let trainings: Training[] = [];
         if(trainingsId && trainingsId.length > 0){
-            for(var trainingID of trainingsId){
-              var training = await this.trainingRepository.getTrainingByID(trainingID);
+            for(let trainingID of trainingsId){
+              let training = await this.trainingRepository.getTrainingByID(trainingID);
               if(training) trainings.push(training);
             }
         }
@@ -73,13 +120,19 @@ export class ChapterService {
             lessonsIds
         );
         return { ... chapter };
-      
     }
+    //#endregion
 
+    //#region Delete one Chapter By Id
+    /**
+     * @param chapterId (the chapter's Id who comes from the Controller)
+     * @returns a STRING who comes from Repository
+     */
     async deleteChapter(chapterId: number): Promise<string> {
       if(await this.chapterRepository.getChapterByID(chapterId)){
         this.chapterRepository.deleteChapter(chapterId);
         return "Chapter deleted";
       }
-    } 
+    }
+    //#endregion
 }

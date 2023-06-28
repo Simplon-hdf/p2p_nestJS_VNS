@@ -7,26 +7,44 @@ export class PersonController {
 
     constructor(private readonly personService: PersonService) { }
 
-    // Search all
+    //#region Get All Persons
+    /**
+     * @returns a LIST of Persons who comes from Service (with their relations)
+     */
     @Get()
     GetAllPersons() {
         return this.personService.GetAllPersons();
     }
+    //#endregion
 
-    // Search one by ID
+    //#region Get ONE by ID
+    /**
+     * @param personId (Person's Id who comes from URL)
+     * @returns one Person who comes from Service (with his relations)
+     */
     @Get('id/:id')
     GetPersonById(@Param('id') personId: number) {
         return this.personService.GetPersonById(personId);
     }
+    //#endregion
 
-    // Search one by EMAIL
+    //#region  Get ONE by EMAIL
+    /**
+     * @param req (the request in totality)
+     * @returns one Person who comes from Service (with his relations)
+     */
     @Get('email')
     GetPersonByEmail(@Req() req) {
         const email = req.body.email;
         return this.personService.GetPersonByEmail(email);
     }
+    //#endregion
 
-    // Create one if didn't exist
+    //#region Post a NEW Person
+    /**
+     * @param req (the request in totality)
+     * @returns the Person who was created and who comes from Service
+     */
     @Post()
     async createPerson(@Req() req) {
         const lastName = req.body.lastName;
@@ -40,8 +58,14 @@ export class PersonController {
 
         return this.personService.createPerson(lastName, firstName, email, password, adress, birthday, isActive, roleId);
     }
+    //#endregion
 
-    // Update one
+    //#region Update a Person by Id
+    /**
+     * @param personId (the person's Id who comes from URL)
+     * @param req (the request in totality)
+     * @returns the Person who was updated in DataBase
+     */
     @Put(':id')
     async updatePerson(@Param('id') personId: number, @Req() req): Promise<Person> {
 
@@ -59,18 +83,30 @@ export class PersonController {
         );
         return updatedPerson;
     }
+    //#endregion
 
-    // SOFT Delete
-    @Put('disable/:id')
-    async disabledPerson(@Param('id') personId: number): Promise<Person> {
-        const updatedPerson = await this.personService.disabledPerson(personId);
-        return updatedPerson;
-    }
-
-    // HARD Delete
+    //#region Delete one Person by Id
+    /**
+     * @param personId (the person's Id who comes from URL)
+     * @returns a String from Service
+     */
     @Delete(':id')
     async deletePerson(@Param('id') personId: number): Promise<string> {
         const deletedPerson = await this.personService.deletePerson(personId);
         return deletedPerson;
     }
+    //#endregion
+
+    //#region Soft Delete (isActive Update) by Id
+    /**
+     * @param personId (the person's Id who comes from URL)
+     * @returns the Person who was disabled from Service
+     */
+    @Put('disable/:id')
+    async disabledPerson(@Param('id') personId: number): Promise<Person> {
+        const updatedPerson = await this.personService.disabledPerson(personId);
+        return updatedPerson;
+    }
+    //#endregion
+
 }

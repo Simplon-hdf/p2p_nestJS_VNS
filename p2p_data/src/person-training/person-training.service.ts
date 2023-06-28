@@ -20,6 +20,12 @@ export class PersonTrainingService {
         return [...personTrainings];
     }
 
+    //#region Search training by ID
+    /**
+     * 
+     * @param personTrainingId (Person-Training Id to find) 
+     * @returns a person OBJECT or an ERROR
+     */
     // Search one by ID
     async GetPersonTrainingById(personTrainingId: number): Promise<PersonTraining> {
         const personTraining = await this.personTrainingRepository.GetPersonTrainingById(personTrainingId);
@@ -28,8 +34,10 @@ export class PersonTrainingService {
         }
         return { ...personTraining };
     }
+    //#endregion
 
-    // Create one if didn't exist
+    //#region Create one if didn't exist
+    /** ceci est une docstring */
     async createPersonTraining(
         isAuthor: boolean,
         isActive: boolean,
@@ -41,6 +49,7 @@ export class PersonTrainingService {
         return { ...newPersonTraining }
         
     }
+    //#endregion
 
     // Update one 
     async updatePersonTraining(idPersonTraining : number, isAuthor: boolean, isActive: boolean, person: number, training: number ): Promise<PersonTraining> {

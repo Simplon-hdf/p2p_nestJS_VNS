@@ -34,7 +34,6 @@ export class PersonTrainingRepository {
         } catch (error) {
             return error;
         }
-
     }
 
     // Create one if didn't exist
