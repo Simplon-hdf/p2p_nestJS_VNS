@@ -30,19 +30,9 @@ export class PersonTrainingService {
     }
 
     // Create one if didn't exist
-    async createPersonTraining(
-        idPersonTraining: number,
-        isAuthor: boolean,
-        isActive: boolean
-    ): Promise<PersonTraining> {
-
-        const personTrainingInBdd = await this.personTrainingRepository.GetPersonTrainingByName(isAuthor);
-        if (personTrainingInBdd) {
-            throw new Error("Error : This personTraining already exist !");
-        } else {
-            const newPersonTraining = await this.personTrainingRepository.CreatePersonTraining(isAuthor, isActive);
+    async createPersonTraining(isAuthor: boolean, isActive: boolean): Promise<PersonTraining> {
+        const newPersonTraining = await this.personTrainingRepository.CreatePersonTraining(isAuthor, isActive);
             return { ...newPersonTraining }
-        }
     }
 
     // Update one 

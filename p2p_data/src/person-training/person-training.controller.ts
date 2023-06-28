@@ -21,10 +21,10 @@ export class PersonTrainingController {
 
     // Create one if didn't exist
     @Post()
-    async createPersonTraining(@Param('id') idPersonTraining: number, @Req() req) {
+    async createPersonTraining(@Req() req) {
         const isAuthor = req.body.isAuthor;
         const isActive = req.body.isActive;
-        return await this.personTrainingService.createPersonTraining(idPersonTraining, isAuthor, isActive);
+        return await this.personTrainingService.createPersonTraining(isAuthor, isActive);
     }
 
     // Update one

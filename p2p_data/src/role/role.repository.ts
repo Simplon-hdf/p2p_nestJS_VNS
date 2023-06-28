@@ -29,7 +29,6 @@ export class RoleRepository {
         } catch (error) {
             return error;
         }
-
     }
 
     // Search one by NAME
@@ -42,7 +41,6 @@ export class RoleRepository {
         } catch (error) {
             return error;
         }
-
     }
 
     // Create one if didn't exist

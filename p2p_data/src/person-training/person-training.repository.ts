@@ -13,7 +13,7 @@ export class PersonTrainingRepository {
     // Search all
     async GetAllPersonTrainings(): Promise<PersonTraining[]> {
         try {
-            return await this.personTrainingRepository.find()
+            return await this.personTrainingRepository.find({ relations: { person: true } })
         } catch (error) {
             return error;
         }
@@ -22,25 +22,13 @@ export class PersonTrainingRepository {
     // Search one by ID
     async GetPersonTrainingById(personTrainingId: number): Promise<PersonTraining> {
         try {
-            return await this.personTrainingRepository.findOneBy({
-                id: personTrainingId
+            return await this.personTrainingRepository.findOne({
+                where: { id: personTrainingId },
+                relations: { person: true }
             });
         } catch (error) {
             return error;
         }
-
-    }
-
-    // Search one by NAME
-    async GetPersonTrainingByName(isAuthor: boolean): Promise<PersonTraining> {
-        try {
-            return await this.personTrainingRepository.findOneBy({
-                isAuthor: isAuthor
-            });
-        } catch (error) {
-            return error;
-        }
-
     }
 
     // Create one if didn't exist
