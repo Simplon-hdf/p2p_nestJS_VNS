@@ -10,7 +10,7 @@ export class ChapterController {
 
     /**
      * Get ALL Chapters
-     * @returns a LIST off Chapters OBJECTS whom comes from Service
+     * @returns a LIST off Chapters OBJECTS who comes from Service
      */
     @Get()
     getAllChapters() {
@@ -38,8 +38,8 @@ export class ChapterController {
     }
 
     /**
-     * Get Chapter by name
-     * @param searchedTitle (the piece of string to find who comes from the Body request)
+     * Get Chapters by name
+     * @param searchedTitle (the piece of string to find and who comes from the Body request)
      * @returns a LIST of Chapters who comes from Service
      */
     @Get('search')
@@ -69,7 +69,7 @@ export class ChapterController {
     }
 
     /**
-     * Update a chapter by Id
+     * Update a Chapter by Id
      * @param chapterId (the Id chapter who comes from the URL)
      * @param title (the title who comes from the request body)
      * @param description (the description who comes from the request body)
